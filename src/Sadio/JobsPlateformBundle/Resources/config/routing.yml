@@ -1,0 +1,3 @@
+sadio_jobs_plateform_homepage:
+    path:     /hello-world
+    defaults: { _controller: SadioJobsPlateformBundle:Default:index }

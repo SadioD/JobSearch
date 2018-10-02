@@ -1,0 +1,4 @@
+services:
+#    sadio_jobs_plateform.example:
+#        class: Sadio\JobsPlateformBundle\Example
+#        arguments: ["@service_id", "plain_value", "%parameter%"]
