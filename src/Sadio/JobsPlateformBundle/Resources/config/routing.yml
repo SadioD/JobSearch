@@ -1,3 +1,38 @@
-sadio_jobs_plateform_homepage:
-    path:     /hello-world
-    defaults: { _controller: SadioJobsPlateformBundle:Default:index }
+# Page d'Accueil
+sadioJobsP_homepage:
+    path:     /{page}
+    defaults: 
+        _controller: SadioJobsPlateformBundle:Default:index
+        page: 1
+    requirements:
+        page: \d*
+
+# Page Single Post
+sadioJobsP_singlePost:
+    path:     /offer/{id}
+    defaults: 
+        _controller: SadioJobsPlateformBundle:Default:view
+    requirements:
+        id: \d+
+
+# Page Add New Post
+sadioJobsP_newPost:
+    path:     /new-offer
+    defaults: 
+        _controller: SadioJobsPlateformBundle:Default:new
+
+# Page Update Post
+sadioJobsP_editPost:
+    path:     /edit-offer/{id}
+    defaults: 
+        _controller: SadioJobsPlateformBundle:Default:update
+    requirements:
+        id: \d+
+
+# Page Delete Post
+sadioJobsP_deletePost:
+    path:     /delete-offer/{id}
+    defaults: 
+        _controller: SadioJobsPlateformBundle:Default:delete
+    requirements:
+        id: \d+
