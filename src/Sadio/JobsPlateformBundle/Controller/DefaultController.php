@@ -11,7 +11,7 @@ class DefaultController extends Controller
 {
     // HomePage - Route: /platform/hello-world --------------------------------------------------------------------------------------
     public function indexAction($page) {
-        if($page < 1) {
+        if($page != "" && $page < 1) {
             throw new NotFoundHttpException('Page "'.$page.'" does not exist.');
         }
         // Soit on use de la méthode courte --> vue dans app/Ressources/views/default/index.html.twig
