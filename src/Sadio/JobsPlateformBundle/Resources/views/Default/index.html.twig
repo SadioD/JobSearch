@@ -1,15 +1,9 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Hello</title>
-</head>
-<body>
-    <div class="container">
-        <h1>Hello {{ userName }}</h1>
-        <p>You are learning fast. Soon you'll be a professionnal... (from: JobsPlatform/Ressources/Views)</p>
-    </div>
-</body>
-</html>
+{% extends 'base.html.twig' %}
+{% block body %}
+<div class="container">
+    <br /><br /><br /><br /><br /><br />
+    <h1>Hello {{ userName }}</h1>
+    <p>You are learning fast. Soon you'll be a professionnal... (from: JobsPlatform/Ressources/Default/Views)</p>
+    yay!
+</div>
+{% endblock %}

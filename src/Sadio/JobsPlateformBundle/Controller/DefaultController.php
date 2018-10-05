@@ -14,8 +14,8 @@ class DefaultController extends Controller
         if($page != "" && $page < 1) {
             throw new NotFoundHttpException('Page "'.$page.'" does not exist.');
         }
-        // Soit on use de la méthode courte --> vue dans app/Ressources/views/default/index.html.twig
-        return $this->render('default/index.html.twig', ['userName' => 'Douze']);
+        // On use de la méthode courte --> vue dans app/Ressources/views/default/index.html.twig
+        return $this->render('@SadioJobsPlateform/Default/index.html.twig', ['userName' => 'Douze']);
     }// -----------------------------------------------------------------------------------------------------------------------------
     // Page Single Post - Route: /platform/offer/{id} -------------------------------------------------------------------------------
     public function viewAction($id) {
