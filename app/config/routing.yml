@@ -1,3 +1,2 @@
 sadio_jobs_plateform:
     resource: "@SadioJobsPlateformBundle/Resources/config/routing.yml"
-    prefix:   /platform

@@ -1,0 +1,20 @@
+/* View JobsPlatform:Index */
+.offersListItem:hover {
+    background: #edc03a36;
+}
+
+.listItemMark {
+    color: #605f5de3;
+}
+
+@media only screen and (min-width : 768px) {
+    .listItemMark {
+        background: #edc03aac;
+        color: #605f5de3;
+    }
+}
+
+
+
+
+

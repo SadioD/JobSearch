@@ -1,0 +1,10 @@
+<div class="story-content">
+    <h4>Recently posted</h4>
+    <ul class="ml-3 mt-1">
+        {% for job in recentlyPosted if recentlyPosted is not empty %}
+            <li><a class="recentPostItem" href="">{{ job.position }}</a></li><br />
+        {% else %}
+            <li>Aucune Offre Disponible</li>
+        {% endfor %}
+    </ul>
+</div>

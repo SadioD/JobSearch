@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <!-- Mobile Specific Meta -->
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+    <meta charset="UTF-8" />
+
+    <title>{% block title %}Welcome!{% endblock %}</title>
+    <link rel="icon" type="image/x-icon" href="{{ asset('assets/images/favicon.ico') }}" />
+
+    <!-- Bootstrap theme CSS -->
+    
+    
+    
+    <link rel="stylesheet" href="{{ asset('assets/vendor/css/font-awesome.min.css') }}">
+    <link rel="stylesheet" href="{{ asset('assets/vendor/css/bootstrap.min.css') }}">
+    <link rel="stylesheet" href="{{ asset('assets/vendor/css/mdb.min.css') }}">
+    <link href="https://fonts.googleapis.com/css?family=Poppins:100,300,500" rel="stylesheet">
+    <link rel="stylesheet" href="{{ asset('assets/vendor/css/linearicons.css') }}">
+    <link rel="stylesheet" href="{{ asset('assets/vendor/css/owl.carousel.css') }}">
+    <link rel="stylesheet" href="{{ asset('assets/vendor/css/nice-select.css') }}">
+    <link rel="stylesheet" href="{{ asset('assets/vendor/css/magnific-popup.css') }}">
+    <link rel="stylesheet" href="{{ asset('assets/vendor/css/main.css') }}">
+    {% block stylesheets %}{% endblock %}
+</head>
+
+<body>
+    <div class="container pt-md-3">
+        <div class="row" style="background: gray">
+            <div class="col-5" style="height: 100px; background: yellow">amadou diallo</div>
+            <div class="col-2 offset-3" style="height: 100px; background: green">sadio</div>
+        </div>
+    </div>
+
+    <!-- Bootstrap theme JS -->
+    <script src="{{ asset('assets/vendor/js/vendor/jquery-3.2.1.min.js') }}"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49"
+        crossorigin="anonymous"></script>
+    <script src="{{ asset('assets/vendor/js/vendor/bootstrap.min.js') }}"></script>
+    <script src="{{ asset('assets/vendor/js/mdb.min.js') }}"></script>
+    <script src="{{ asset('assets/vendor/js/jquery.ajaxchimp.min.js') }}"></script>
+    <script src="{{ asset('assets/vendor/js/owl.carousel.min.js') }}"></script>
+    <script src="{{ asset('assets/vendor/js/jquery.nice-select.min.js') }}"></script>
+    <script src="{{ asset('assets/vendor/js/jquery.magnific-popup.min.js') }}"></script>
+    <script src="{{ asset('assets/vendor/js/main.js') }}"></script>
+    
+    {#<script src="{{ asset('assets/vendor/js/bootstrap.bundle.min.js') }}"></script>#}
+    
+    
+    
+    
+    <script src="{{ asset('assets/vendor/js/mdb.min.js') }}"></script>
+    {% block javascripts %}{% endblock %}
+</body>
+
+</html>

@@ -1,9 +1,65 @@
-{% extends 'base.html.twig' %}
-{% block body %}
-<div class="container">
-    <br /><br /><br /><br /><br /><br />
-    <h1>Hello {{ userName }}</h1>
-    <p>You are learning fast. Soon you'll be a professionnal... (from: JobsPlatform/Ressources/Default/Views)</p>
-    yay!
-</div>
-{% endblock %}
+{% extends "@SadioJobsPlateform/platform_layout.html.twig" %}
+    
+    {# Page Title Tag #}
+    {% block title %}
+        {{ parent() }} - Offers List
+    {% endblock title %}
+
+    {# Page Body #}
+    {% block jobsPlatform_body %}
+        <div class="row">
+            <div class="col-12 pt-30">
+                <p class="lead">Find your dream job...</p>
+                <div class="list-group mt-20 mb-30">
+                    {% for job in list if list is not empty %}
+                        <a href="" class="list-group-item list-group-item-action offersListItem">
+                            <h4>{{ job.position }}
+                                <small class="d-none d-sm-block float-right text-muted">
+                                    {{"now"|date("m/d/Y")}}
+                                </small>
+                            </h4>
+                            <p class="mt-10">
+                                {% if job.shortDesc is not empty %}
+                                    {{ job.shortDesc }}
+                                {% else %}
+                                    {{ job.description }}
+                                {% endif %}
+                            </p>
+                            <p class="float-right text-muted">
+                                <mark class="listItemMark"><em>- Posted By {{ job.author }}</em></mark><br class="d-sm-none" />
+                                <em class="d-sm-none float-right">{{"now"|date("m/d/Y")}}</em>
+                            </p>
+                        </a>
+                    {% else %}
+                        <h4 style="color:#605f5de3;">Il n'y a plus d'offres à pourvoir. Revenez dans quelques jours...</h4>
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+        
+        <!-- Pagination -->
+        <div class="row">
+            <div class="col-12 text-center" style="background:lightgreen; margin-bottom:2%;">
+                <div aria-label="Page navigation">
+                    <ul class="pagination justify-content-center">
+                        <li class="page-item">
+                            <a class="page-link" href="#" aria-label="Previous">
+                                <span aria-hidden="true">&laquo;</span>
+                                <span class="sr-only">Previous</span>
+                            </a>
+                        </li>
+                        suprimer les fichiers js et css inutiles si le design ne change pas
+                        <li class="page-item"><a class="page-link" href="#">1</a></li>
+                        <li class="page-item"><a class="page-link" href="#">2</a></li>
+                        <li class="page-item"><a class="page-link" href="#">3</a></li>
+                        <li class="page-item">
+                            <a class="page-link" href="#" aria-label="Next">
+                                <span aria-hidden="true">&raquo;</span>
+                                <span class="sr-only">Next</span>
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    {% endblock jobsPlatform_body %}
