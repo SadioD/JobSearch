@@ -1,10 +1,22 @@
-/* View JobsPlatform:Index */
+/* Liste des Offres */
 .offersListItem:hover {
     background: #edc03a36;
 }
 
 .listItemMark {
     color: #605f5de3;
+}
+
+/* Pagination */
+.paginationLink {
+    color: #605f5de3;
+    background: #edc03aac;
+    border-color: #605f5de3;
+}
+
+.paginationLink:hover {
+    background: rgb(34, 33, 33);
+    color: #f7c634;
 }
 
 @media only screen and (min-width : 768px) {

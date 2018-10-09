@@ -12,8 +12,9 @@
                 <p class="lead">Find your dream job...</p>
                 <div class="list-group mt-20 mb-30">
                     {% for job in list if list is not empty %}
-                        <a href="" class="list-group-item list-group-item-action offersListItem">
-                            <h4>{{ job.position }}
+                        <a href="{{path('sadioJobsP_singlePost', {'id': job.id})}}" class="list-group-item list-group-item-action offersListItem">
+                            <h4>
+                                {{ job.position }}
                                 <small class="d-none d-sm-block float-right text-muted">
                                     {{"now"|date("m/d/Y")}}
                                 </small>
@@ -39,21 +40,20 @@
         
         <!-- Pagination -->
         <div class="row">
-            <div class="col-12 text-center" style="background:lightgreen; margin-bottom:2%;">
+            <div class="col-12 text-center" style="margin-bottom:2%;">
                 <div aria-label="Page navigation">
                     <ul class="pagination justify-content-center">
                         <li class="page-item">
-                            <a class="page-link" href="#" aria-label="Previous">
+                            <a class="page-link paginationLink" href="#" aria-label="Previous">
                                 <span aria-hidden="true">&laquo;</span>
                                 <span class="sr-only">Previous</span>
                             </a>
                         </li>
-                        suprimer les fichiers js et css inutiles si le design ne change pas
-                        <li class="page-item"><a class="page-link" href="#">1</a></li>
-                        <li class="page-item"><a class="page-link" href="#">2</a></li>
-                        <li class="page-item"><a class="page-link" href="#">3</a></li>
+                        <li class="page-item"><a class="page-link paginationLink" href="#">1</a></li>
+                        <li class="page-item"><a class="page-link paginationLink" href="#">2</a></li>
+                        <li class="page-item"><a class="page-link paginationLink" href="#">3</a></li>
                         <li class="page-item">
-                            <a class="page-link" href="#" aria-label="Next">
+                            <a class="page-link  paginationLink" href="#" aria-label="Next">
                                 <span aria-hidden="true">&raquo;</span>
                                 <span class="sr-only">Next</span>
                             </a>

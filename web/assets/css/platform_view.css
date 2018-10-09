@@ -1,0 +1,22 @@
+/* Buttons */
+#editButton {
+    background: #edbf3a;
+    color: black;
+}
+
+#editButton:hover {
+    background: #f0ce69;
+}
+
+#editIcon {
+     color: black;
+}
+
+#deleteButton {
+    color: #edbf3a;
+    background: #2c2c2c;
+}
+
+#deleteButton:hover {
+    background: #4e4c4c;
+}

@@ -1,0 +1,45 @@
+{% extends "@SadioJobsPlateform/platform_layout.html.twig" %}
+    
+    {# Page Title Tag #}
+    {% block title %}
+        {{ parent() }} - Offers List
+    {% endblock title %}
+
+    {# Page Body #}
+    {% block jobsPlatform_body %}
+        <div class="row">
+            <div class="col-12 pt-30">
+                <ul class="list-group mt-20 mb-30">
+                    <li class="list-group-item">
+                        <h3>
+                            {{ offer.position }}
+                            <small class="d-none d-sm-block float-right text-muted">
+                                {{"now"|date("m/d/Y")}}
+                            </small>
+                        </h3>
+                        <div class="mt-20 mb-30">
+                            <p>
+                                {{ offer.description }}
+                            </p>
+                            <p class="float-right text-muted">
+                                <mark class="listItemMark"><em>- Posted By {{ offer.author }}</em></mark><br class="d-sm-none" />
+                                <em class="d-sm-none float-right">{{"now"|date("m/d/Y")}}</em>
+                            </p>
+                        </div>
+                        
+                        <!-- Buttons -->
+                        <div>
+                            <p class="ml-3 ml-sm-0">
+                                <a class="btn btn-warning" id="editButton">
+                                    <i class="fa fa-pencil-square-o" id="editIcon"></i> Edit
+                                </a>
+                                <a class="btn btn-dark" id="deleteButton">
+                                    <i class="fa fa-trash-o"></i> Delete
+                                </a>
+                            </p>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    {% endblock jobsPlatform_body %}

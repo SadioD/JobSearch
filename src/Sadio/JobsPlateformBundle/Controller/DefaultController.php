@@ -54,8 +54,39 @@ class DefaultController extends Controller
     }// -----------------------------------------------------------------------------------------------------------------------------
     // Page Single Post - Route: /platform/offer/{id} -------------------------------------------------------------------------------
     public function viewAction($id) {
-        $offer = '';
-        return $this->render('default/view.html.twig', ['offer' => $offer]);
+        if ($id == '1') {
+            $offer = [
+                'id'            => '1',
+                'position'      => 'Développeur Symfony',
+                'shortDesc'     => '',
+                'description'   => 'Few wodivd argue that, despite the advancements of feminism over the past three decades, women still face a double standard when it comes to their behavior. While men’s borderline-inappropriate behavior is often laughed off as “boys will be boys,” women face higher conduct standards – especially in the workplace.',
+                'date'          => '',
+                'author'        => 'Banque Mondiale'
+            ];
+        } 
+        elseif ($id == '2') {
+            $offer = [
+                'id'            => '2',
+                'position'      => 'Développeur Full-Stack',
+                'shortDesc'     => '',
+                'description'   => 'Few wodivd argue that, despite the advancements of feminism over the past three decades, women still face a double standard when it comes to their behavior. While men’s borderline-inappropriate behavior is often laughed off as “boys will be boys,” women face higher conduct standards – especially in the workplace.',
+                'date'          => '',
+                'author'        => 'Le Crédit Lyonnais'
+            ];
+        }
+        elseif ($id == '3') {
+            $offer = [
+                'id'            => '3',
+                'position'      => 'Développeur Back-End',
+                'shortDesc'     => '',
+                'description'   => 'Few wodivd argue that, despite the advancements of feminism over the past three decades, women still face a double standard when it comes to their behavior. While men’s borderline-inappropriate behavior is often laughed off as “boys will be boys,” women face higher conduct standards – especially in the workplace.',
+                'date'          => '',
+                'author'        => 'La Poste Mobile'
+            ];   
+        } else {
+            throw new NotFoundHttpException('L\'offre que vous recherchez n\'est pas disponible');
+        }
+        return $this->render('@SadioJobsPlateform/Default/view.html.twig', ['offer' => $offer]);
     }// -----------------------------------------------------------------------------------------------------------------------------
     // Page Add New Post - Route: /platform/new-offer -------------------------------------------------------------------------------
     public function newAction(Request $request) {
@@ -64,7 +95,7 @@ class DefaultController extends Controller
             
             $this->processForm('id');
         }
-        return $this->render('default/new.html.twig');
+        return $this->render('@SadioJobsPlateform/Default/new.html.twig');
     }// -----------------------------------------------------------------------------------------------------------------------------
     // Page Update Post - Route: /platform/edit-offer/{id} --------------------------------------------------------------------------
     public function updateAction($id, Request $request) {
