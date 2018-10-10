@@ -12,7 +12,8 @@ class DefaultController extends Controller
     // HomePage - Route: /platform/hello-world --------------------------------------------------------------------------------------
     public function indexAction($page) {
         if ($page != "" && $page < 1) {
-            throw new NotFoundHttpException('Page "'.$page.'" does not exist.');
+            // throw new NotFoundHttpException('Page "'.$page.'" does not exist.');
+            throw $this->createNotFoundException('The product does not exist');
         }
         // On recupère la liste d'offres depuis la BDD
         $list = [

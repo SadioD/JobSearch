@@ -20,3 +20,8 @@
 #deleteButton:hover {
     background: #4e4c4c;
 }
+
+/* Single Post */
+.listItemMark {
+    color: #605f5de3;
+}

@@ -1,11 +1,14 @@
 {% extends "@SadioJobsPlateform/platform_layout.html.twig" %}
-    
-    {# Page Title Tag #}
+    {# Page CSS AND TITLE --------------------------------------------------------------------------------------------------------- #}
+    {% block stylesheets %}
+        {{ parent() }}
+        <link rel="stylesheet" href="{{ asset('assets/css/jobsPlatform_view.css') }}" />
+    {% endblock %}
     {% block title %}
-        {{ parent() }} - Offers List
+        {{ parent() }} - {{ offer.position }}
     {% endblock title %}
-
-    {# Page Body #}
+    {# ---------------------------------------------------------------------------------------------------------------------------- #}
+    {# Page Body ------------------------------------------------------------------------------------------------------------------ #}
     {% block jobsPlatform_body %}
         <div class="row">
             <div class="col-12 pt-30">

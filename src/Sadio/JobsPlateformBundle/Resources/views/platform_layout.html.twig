@@ -1,10 +1,12 @@
 {% extends "base.html.twig" %}
+    {# Page Body ------------------------------------------------------------------------------------------------------------------ #}
     {% block body %}
-    <div class="story-content">
-        <h2 class="text-center">A Job Searching Platform</h2>
-        <hr class="d-none d-sm-block">
+        <div class="story-content">
+            <h2 class="text-center">A Job Searching Platform</h2>
+            <hr class="d-none d-sm-block">
 
-        {% block jobsPlatform_body %}
-        {% endblock jobsPlatform_body %}
-    </div>
-{% endblock body %}
+            {% block jobsPlatform_body %}
+            {% endblock jobsPlatform_body %}
+        </div>
+    {% endblock body %}
+    {# ---------------------------------------------------------------------------------------------------------------------------- #}
