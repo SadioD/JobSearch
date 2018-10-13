@@ -13,3 +13,29 @@ services:
         # this means you cannot fetch services directly from the container via $container->get()
         # if you need to do this, you can override this setting on individual services
         public: false
+    # makes classes in src/Sadio/AntiSpam available to be used as services
+    # this creates a service per class whose id is the fully-qualified class name
+    Sadio\AntiSpamBundle\:
+        resource: '../../src/Sadio/AntiSpamBundle/*'
+        # you can exclude directories or files
+        # but if a service is unused, it's removed anyway
+        exclude: '../../src/Sadio/AntiSpamBundle/{Entity,Repository,Tests}'
+
+    
+    ###########################################################################################    
+    # controllers are imported separately to make sure they're public
+    # and have a tag that allows actions to type-hint services
+    Sadio\JobsPlateformBundle\Controller\:
+        resource: '../../src/Sadio/JobsPlateformBundle/Controller'
+        public: true
+        tags: ['controller.service_arguments']
+    
+    Sadio\AntiSpamBundle\Controller\:
+        resource: '../../src/Sadio/AntiSpamBundle/Controller'
+        public: true
+        tags: ['controller.service_arguments']
+
+    CoreBundle\Controller\:
+        resource: '../../src/CoreBundle/Controller'
+        public: true
+        tags: ['controller.service_arguments']        

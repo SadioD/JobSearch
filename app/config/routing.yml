@@ -1,2 +1,11 @@
+core:
+    resource: "@CoreBundle/Resources/config/routing.yml"
+    prefix:   /
+
+sadio_anti_spam:
+    resource: "@SadioAntiSpamBundle/Resources/config/routing.yml"
+    prefix:   /
+
 sadio_jobs_plateform:
     resource: "@SadioJobsPlateformBundle/Resources/config/routing.yml"
+    prefix:   /platform/

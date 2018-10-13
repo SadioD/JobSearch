@@ -1,0 +1,39 @@
+{% extends "base.html.twig" %}
+{# Page CSS AND TITLE
+--------------------------------------------------------------------------------------------------------- #}
+{% block title %}
+    {{ parent() }} - Home
+{% endblock title %}
+{#
+----------------------------------------------------------------------------------------------------------------------------
+#}
+{# Page Body
+------------------------------------------------------------------------------------------------------------------ #}
+{% block body %}
+    <div class="story-content">
+        <h2 class="text-center">About Us</h2>
+        <hr class="d-none d-sm-block">
+    
+        <div class="row">
+            <div class="col-12 pt-30">
+                <p class="lead">Lorem ipsum dolor sit...</p>
+                <div class="card mt-20 mb-30">
+                    <div class="card-body">
+                        <p class="card-text">
+                            Nunc ultricies nunc venenatis fermentum mattis. Mauris convallis erat neque, quis dapibus eros fringilla ac. In
+                            blandit semper augue nec volutpat. Proin ultrices at massa ut rhoncus. Aliquam ac augue quam. Nam sit amet purus vel felis
+                            gravida rhoncus. Integer lectus orci, aliquam sit amet ullamcorper nec, accumsan in nisi. In pharetra lacinia
+                            imperdiet. Curabitur rhoncus pretium mollis. Nullam efficitur in orci vitae malesuada. <br /><br />
+                        
+                            Proin pellentesque, diam vel posuere finibus, turpis tortor vestibulum eros, egestas pellentesque nisi quam et
+                            sapien.
+                            Pellentesque tincidunt lacinia mattis. Morbi ac placerat justo. Nam nec vulputate orci. Nullam et turpis in nibh
+                            elementum pretium. Ut nec leo congue, pellentesque orci porta, viverra tellus. Interdum et malesuada fames ac ante
+                            ipsum primis in faucibus.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock body %}
