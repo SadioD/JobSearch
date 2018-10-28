@@ -1,0 +1,23 @@
+{% extends "@SadioJobsPlateform/platform_layout.html.twig" %}
+    {# Page CSS AND TITLE --------------------------------------------------------------------------------------------------------- #}
+    {% block title %}
+        {{ parent() }} - New Offer
+    {% endblock title %}
+    {# ---------------------------------------------------------------------------------------------------------------------------- #}
+    {# Page Body ------------------------------------------------------------------------------------------------------------------ #}
+    {% block jobsPlatform_body %}
+        <div class="row">
+            <div class="col-12 pt-30">
+                <div class="card mt-20 mb-30">
+                    <div class="card-header">
+                        <p class="lead">Please fill in all fields.</p>
+                    </div>
+                    <div class="card-body">
+                        <div class="card-text">
+                            {% include "@SadioJobsPlateform/Default/form.html.twig" %}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    {% endblock jobsPlatform_body %}

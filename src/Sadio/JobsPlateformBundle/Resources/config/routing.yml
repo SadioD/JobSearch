@@ -1,3 +1,4 @@
+# Prefix /platform/
 # Page d'Accueil
 sadioJobsP_homepage:
     path:     /{page}
@@ -25,7 +26,7 @@ sadioJobsP_newPost:
 sadioJobsP_editPost:
     path:     /edit-offer/{id}
     defaults: 
-        _controller: SadioJobsPlateformBundle:Default:update
+        _controller: SadioJobsPlateformBundle:Default:edit
     requirements:
         id: \d+
 
