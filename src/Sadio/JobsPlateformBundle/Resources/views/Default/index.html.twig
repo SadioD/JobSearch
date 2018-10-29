@@ -12,30 +12,35 @@
     {% block jobsPlatform_body %}
         <div class="row">
             <div class="col-12 pt-30">
+                <div class="text-center" style="color:green;">
+                    {% for message in app.flashes('notice') %}
+                        <i class="fa fa-check" style="color:green;"></i> {{ message }}
+                    {% endfor %}
+                </div>
                 <p class="lead">Find your dream job...</p>
                 <div class="list-group mt-20 mb-30">
-                    {% for job in list if list is not empty %}
-                        <a href="{{path('sadioJobsP_singlePost', {'id': job.id})}}" class="list-group-item list-group-item-action offersListItem">
+                    {% for offer in list if list is not empty %}
+                        <a href="{{path('sadioJobsP_singlePost', {'id': offer.getId})}}" class="list-group-item list-group-item-action offersListItem">
                             <h4>
-                                {{ job.position }}
+                                {{ offer.getPosition }}
                                 <small class="d-none d-sm-block float-right text-muted">
-                                    {{"now"|date("m/d/Y")}}
+                                    {{ offer.getCreationDate|date("m/d/Y") }}
                                 </small>
                             </h4>
                             <p class="mt-10">
-                                {% if job.shortDesc is not empty %}
-                                    {{ job.shortDesc }}
+                                {% if offer.getShortDesc is not empty %}
+                                    {{ offer.getShortDesc }}
                                 {% else %}
-                                    {{ job.description }}
+                                    {{ offer.getDescription }}
                                 {% endif %}
                             </p>
                             <p class="float-right text-muted">
-                                <mark class="listItemMark"><em>- Posted By {{ job.author }}</em></mark><br class="d-sm-none" />
-                                <em class="d-sm-none float-right">{{"now"|date("m/d/Y")}}</em>
+                                <mark class="listItemMark"><em>- Posted By {{ offer.getAuthor }}</em></mark><br class="d-sm-none" />
+                                <em class="d-sm-none float-right">{{ offer.getCreationDate|date("m/d/Y") }}</em>
                             </p>
                         </a>
                     {% else %}
-                        <h4 style="color:#605f5de3;">Il n'y a plus d'offres à pourvoir. Revenez dans quelques jours...</h4>
+                        <h4 style="color:#605f5de3;">There are no more jobs at the moment. Please try again later...</h4>
                     {% endfor %}
                 </div>
             </div>

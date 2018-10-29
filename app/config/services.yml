@@ -39,3 +39,10 @@ services:
         resource: '../../src/CoreBundle/Controller'
         public: true
         tags: ['controller.service_arguments']        
+
+
+    ############################################################################################
+    # Ce code permet d'autoriser le dossier DataFixtures à etre utiliser commer service (load:fixtures)
+    Sadio\JobsPlateformBundle\DataFixtures\:
+        resource: '../../src/Sadio/JobsPlateformBundle/DataFixtures'
+        tags: ['doctrine.fixture.orm']

@@ -15,28 +15,39 @@
                 <ul class="list-group mt-20 mb-30">
                     <li class="list-group-item">
                         <h3>
-                            {{ offer.position }}
+                            {{ offer.getPosition }}
                             <small class="d-none d-sm-block float-right text-muted">
-                                {{"now"|date("m/d/Y")}}
+                                {{ offer.getCreationDate|date("m/d/Y") }}
                             </small>
                         </h3>
                         <div class="mt-20 mb-30">
                             <p>
-                                {{ offer.description }}
+                                {{ offer.getDescription }}
+                            </p>
+                            <p>
+                                This Offer was posted in following categories : 
+                                <strong>
+                                    <em>
+                                        {% for category in offer.getCategories %}
+                                            {{ category.getName }}
+                                            {% if not loop.last %}, {% endif %}
+                                        {% endfor %}
+                                    </em>
+                                </strong>
                             </p>
                             <p class="float-right text-muted">
-                                <mark class="listItemMark"><em>- Posted By {{ offer.author }}</em></mark><br class="d-sm-none" />
-                                <em class="d-sm-none float-right">{{"now"|date("m/d/Y")}}</em>
+                                <mark class="listItemMark"><em>- Posted By {{ offer.getAuthor }}</em></mark><br class="d-sm-none" />
+                                <em class="d-sm-none float-right">{{ offer.getCreationDate|date("m/d/Y") }}</em>
                             </p>
                         </div>
                         
                         <!-- Buttons -->
                         <div>
                             <p class="ml-3 ml-sm-0">
-                                <a class="btn btn-warning" id="editButton">
+                                <a class="btn btn-warning" id="editButton" href="{{path('sadioJobsP_editPost', {'id': offer.getId})}}">
                                     <i class="fa fa-pencil-square-o" id="editIcon"></i> Edit
                                 </a>
-                                <a class="btn btn-dark" id="deleteButton">
+                                <a class="btn btn-dark" id="deleteButton" href="{{path('sadioJobsP_deletePost', {'id': offer.getId})}}">
                                     <i class="fa fa-trash-o"></i> Delete
                                 </a>
                             </p>
