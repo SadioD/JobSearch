@@ -47,17 +47,18 @@ class Offer
     private $creationDate;
 
     /**
-     * @var string
-     * @ORM\Column(name="author", type="string", length=255)
-     */
-    private $author;
-
-    /**
      * Offer is The Owner of This Relation
      * @ORM\ManyToMany(targetEntity="Sadio\JobsPlateformBundle\Entity\Category", inversedBy="offers", cascade={"persist"})
      * @ORM\JoinColumn(nullable=false)
      */
     private $categories;
+
+    /**
+     * Offer is The Owner of This Relation
+     * @ORM\ManyToOne(targetEntity="Sadio\AuthBundle\Entity\User", inversedBy="offers")
+     * @ORM\JoinColumn(nullable=false)
+     */
+    private $user;
 
     public function __construct(array $donnees = []) {
         foreach($donnees as $key => $value) 
@@ -92,13 +93,13 @@ class Offer
      */
     public function getCreationDate() { return $this->creationDate; }
     /**
-     * @return string
-     */
-    public function getAuthor() { return $this->author; }
-    /**
      * @return \Doctrine\Common\Collections\Collection
      */
     public function getCategories() { return $this->categories; }
+    /**
+     * @return \Sadio\AuthBundle\Entity\User
+     */
+    public function getUser() { return $this->user; }
     // ----------------------------------------------------------------------------------------------------------------------------------
     // SETTERS ---------------------------------------------------------------------------------------------------------------------------
     /**
@@ -142,13 +143,17 @@ class Offer
         return $this;
     }
     /**
-     * @param string $author
+     * @param \Sadio\AuthBundle\Entity\User $user
      * @return Offer
      */
-    public function setAuthor($author)
+    public function setUser(\Sadio\AuthBundle\Entity\User $user)
     {
-        $this->author = $author;
+        $this->user = $user;
 
+        // Vu que la relation est bidirectionnelle on lie également l'offre à User
+        // => il faut utiliser $offer->setUser($user)
+        $user->addOffer($this);
+        
         return $this;
     }// ----------------------------------------------------------------------------------------------------------------------------------
     // OTHERS ---------------------------------------------------------------------------------------------------------------------------

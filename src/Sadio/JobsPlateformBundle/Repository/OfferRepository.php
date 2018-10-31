@@ -10,4 +10,31 @@ namespace Sadio\JobsPlateformBundle\Repository;
  */
 class OfferRepository extends \Doctrine\ORM\EntityRepository
 {
+    // Permet de récupérer une Offre avec ses catégories => quand on fait offer.getCategories, 
+    // Pas de requetes SQL supplémentaire déclenchée
+    public function findOneWithCategories($offerId) 
+    {
+        // "o" represente l'alias de Offer et "c" celui de Category
+        $qb = $this->createQueryBuilder('o');
+
+        $qb->innerJoin('o.categories', 'c')
+           ->addSelect('c')
+           ->where('o.id = :id')
+           ->setParameter('id', $offerId);
+        
+        //return $qb->getQuery()->setMaxResults(1)->getOneOrNullResult(); meme chose que la méthode en bas renvoie un objet
+        return $qb->getQuery()->getSingleResult();
+    }
+    // Permet de récupérer une Offre avec ses catégories => quand on fait offer.getCategories, 
+    // Pas de requetes SQL supplémentaire déclenchée
+    public function findAllWithUser() 
+    {
+        // "o" represente l'alias de Offer et "u" celui de User
+        $qb = $this->createQueryBuilder('o');
+
+        $qb->innerJoin('o.user', 'u')
+           ->addSelect('u');
+        
+        return $qb->getQuery()->getArrayResult();
+    }
 }

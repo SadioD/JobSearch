@@ -20,23 +20,23 @@
                 <p class="lead">Find your dream job...</p>
                 <div class="list-group mt-20 mb-30">
                     {% for offer in list if list is not empty %}
-                        <a href="{{path('sadioJobsP_singlePost', {'id': offer.getId})}}" class="list-group-item list-group-item-action offersListItem">
+                        <a href="{{path('sadioJobsP_singlePost', {'id': offer.id})}}" class="list-group-item list-group-item-action offersListItem">
                             <h4>
-                                {{ offer.getPosition }}
+                                {{ offer.position }}
                                 <small class="d-none d-sm-block float-right text-muted">
-                                    {{ offer.getCreationDate|date("m/d/Y") }}
+                                    {{ offer.creationDate|date("m/d/Y") }}
                                 </small>
                             </h4>
                             <p class="mt-10">
-                                {% if offer.getShortDesc is not empty %}
-                                    {{ offer.getShortDesc }}
+                                {% if offer.shortDesc is not empty %}
+                                    {{ offer.shortDesc }}
                                 {% else %}
-                                    {{ offer.getDescription }}
+                                    {{ offer.description }}
                                 {% endif %}
                             </p>
                             <p class="float-right text-muted">
-                                <mark class="listItemMark"><em>- Posted By {{ offer.getAuthor }}</em></mark><br class="d-sm-none" />
-                                <em class="d-sm-none float-right">{{ offer.getCreationDate|date("m/d/Y") }}</em>
+                                <mark class="listItemMark"><em>- Posted By {{ offer.user.name }}</em></mark><br class="d-sm-none" />
+                                <em class="d-sm-none float-right">{{ offer.creationDate|date("m/d/Y") }}</em>
                             </p>
                         </a>
                     {% else %}

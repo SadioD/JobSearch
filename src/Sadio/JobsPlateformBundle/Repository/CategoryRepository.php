@@ -10,4 +10,17 @@ namespace Sadio\JobsPlateformBundle\Repository;
  */
 class CategoryRepository extends \Doctrine\ORM\EntityRepository
 {
+    // Permet de recupérer des Offres liées à une liste de catégories
+    public function findOffersIn(array $categories) 
+    {
+        // "o" represente l'alias de Offer et "c" celui de Category
+        // $qb->expr()->in() permet de vérifier les conditions de type expression (a > b, a In ['a', 'b'], a like b)
+        $qb = $this->createQueryBuilder('c');
+        $qb->innerJoin('c.offers', 'o')
+           ->addSelect('o')
+           ->where($qb->expr()->in('c.name', $categories));
+        
+        // On utilise getArrayResult() pour optimiser le temps de réponse de la requete
+        return $qb->getQuery()->getArrayResult();
+    }
 }

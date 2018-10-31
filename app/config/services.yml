@@ -35,6 +35,11 @@ services:
         public: true
         tags: ['controller.service_arguments']
 
+    Sadio\AuthBundle\Controller\:
+        resource: '../../src/Sadio/AuthBundle/Controller'
+        public: true
+        tags: ['controller.service_arguments']
+
     CoreBundle\Controller\:
         resource: '../../src/CoreBundle/Controller'
         public: true
@@ -42,7 +47,11 @@ services:
 
 
     ############################################################################################
-    # Ce code permet d'autoriser le dossier DataFixtures à etre utiliser commer service (load:fixtures)
+    # Ce code permet d'autoriser les dossiers DataFixtures à etre utiliser commer service (load:fixtures)
+    Sadio\AuthBundle\DataFixtures\:
+        resource: '../../src/Sadio/AuthBundle/DataFixtures'
+        tags: ['doctrine.fixture.orm']
+
     Sadio\JobsPlateformBundle\DataFixtures\:
         resource: '../../src/Sadio/JobsPlateformBundle/DataFixtures'
         tags: ['doctrine.fixture.orm']

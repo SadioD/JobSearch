@@ -19,14 +19,14 @@ class DefaultController extends Controller
             throw $this->createNotFoundException('Page "'.$page.'" does not exist.');
         }
         // On recupère la liste d'offres depuis la BDD
-        $list = $this->getDoctrine()->getRepository(Offer::class)->findAll();        
-        
+        $list = $this->getDoctrine()->getRepository(Offer::class)->findAllWithUser();        
+        //print_r($list[0]['getId']);
         // On affiche la vue  en usant de la méthode longue --> vue dans Sadio/JobsPlateform/Ressources/views/Default/views/default/index.html.twig
         return $this->render('@SadioJobsPlateform/Default/index.html.twig', ['list' => $list]);
     }// -----------------------------------------------------------------------------------------------------------------------------
     // Page Single Post - Route: /platform/offer/{id} -------------------------------------------------------------------------------
     public function viewAction($id) {
-        $offer = $this->getDoctrine()->getManager()->find(Offer::class, $id);
+        $offer = $this->getDoctrine()->getRepository(Offer::class)->findOneWithCategories($id);
 
         if (!$offer) {
             throw $this->createNotFoundException('No job was found for given information - '. $id);
