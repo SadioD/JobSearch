@@ -1,6 +1,6 @@
 <?php
 
-namespace Sadio\AntiSpamBundle\Service;
+namespace Sadio\JobsPlateformBundle\Services\AntiSpam;
 
 // Ce Service est configurable depuis app/service.yml
 class AntiSpam 

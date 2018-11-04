@@ -4,11 +4,10 @@ namespace Sadio\JobsPlateformBundle\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
-//use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
-use Sadio\AntiSpamBundle\Service\AntiSpam;
 use Sadio\JobsPlateformBundle\Entity\Offer;
 use Sadio\JobsPlateformBundle\Entity\Category;
+use Sadio\AuthBundle\Entity\User;
 
 class DefaultController extends Controller
 {
@@ -26,7 +25,7 @@ class DefaultController extends Controller
     }// -----------------------------------------------------------------------------------------------------------------------------
     // Page Single Post - Route: /platform/offer/{id} -------------------------------------------------------------------------------
     public function viewAction($id) {
-        $offer = $this->getDoctrine()->getRepository(Offer::class)->findOneWithCategories($id);
+        $offer = $this->getDoctrine()->getRepository(Offer::class)->findOneWithAllRelations($id);
 
         if (!$offer) {
             throw $this->createNotFoundException('No job was found for given information - '. $id);
@@ -35,6 +34,12 @@ class DefaultController extends Controller
     }// -----------------------------------------------------------------------------------------------------------------------------
     // Page Add New Post - Route: /platform/new-offer -------------------------------------------------------------------------------
     public function newAction(Request $request) {
+        $offer = $this->getDoctrine()->getManager()->find(Offer::class, 8);
+        
+        $this->getDoctrine()->getManager()->remove($offer);
+        $this->getDoctrine()->getManager()->flush();
+
+
         if($request->isMethod('POST')) {
             // Save le Formulaire 
             // On crée une short Description pour chaque offre si la description est trop longue

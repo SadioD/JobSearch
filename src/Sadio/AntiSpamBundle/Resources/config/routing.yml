@@ -1,4 +1,0 @@
-# Prefix /antispam/
-#sadio_anti_spam_homepage:
-#    path:     /
-#    defaults: { _controller: SadioAntiSpamBundle:Default:index }

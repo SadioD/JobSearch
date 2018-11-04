@@ -16,10 +16,11 @@ class AppKernel extends Kernel
             new Symfony\Bundle\SwiftmailerBundle\SwiftmailerBundle(),
             new Doctrine\Bundle\DoctrineBundle\DoctrineBundle(),
             new Sensio\Bundle\FrameworkExtraBundle\SensioFrameworkExtraBundle(),
-            new Sadio\JobsPlateformBundle\SadioJobsPlateformBundle(),
-            new Sadio\AntiSpamBundle\SadioAntiSpamBundle(),
             new CoreBundle\CoreBundle(),
+            new Sadio\JobsPlateformBundle\SadioJobsPlateformBundle(),
             new Sadio\AuthBundle\SadioAuthBundle(),
+            // Permet de rendre certaines actions (editionDate, slugDefinition) automatiques (lors de Prepersist, etc.)
+            new Stof\DoctrineExtensionsBundle\StofDoctrineExtensionsBundle(),
         ];
 
         if (in_array($this->getEnvironment(), ['dev', 'test'], true)) {

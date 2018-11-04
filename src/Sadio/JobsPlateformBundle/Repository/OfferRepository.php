@@ -12,18 +12,27 @@ class OfferRepository extends \Doctrine\ORM\EntityRepository
 {
     // Permet de récupérer une Offre avec ses catégories => quand on fait offer.getCategories, 
     // Pas de requetes SQL supplémentaire déclenchée
-    public function findOneWithCategories($offerId) 
+    public function findOneWithAllRelations($offerId) 
     {
-        // "o" represente l'alias de Offer et "c" celui de Category
+        // "o" represente l'alias de Offer, "c" celui de Category et "u" celui de User
         $qb = $this->createQueryBuilder('o');
 
-        $qb->innerJoin('o.categories', 'c')
+        // On ajoute d'abord Category
+        $qb->leftJoin('o.categories', 'c')
            ->addSelect('c')
+
+        // On ajoute ensuite User
+           ->leftJoin('o.user', 'u')
+           ->addSelect('u')
+
+        // Enfin on met la condition
            ->where('o.id = :id')
            ->setParameter('id', $offerId);
         
-        //return $qb->getQuery()->setMaxResults(1)->getOneOrNullResult(); meme chose que la méthode en bas renvoie un objet
-        return $qb->getQuery()->getSingleResult();
+        return $qb->getQuery()->setMaxResults(1)->getOneOrNullResult();
+        // return $qb->getQuery()->getSingleResult(); meme chose que la méthode en haut renvoie un objet
+        // Mais si la méthode ne trouve rien => elle déclenche une erreur 
+        // => a éviter si on veut délcencher soit même une erreur 404
     }
     // Permet de récupérer une Offre avec ses catégories => quand on fait offer.getCategories, 
     // Pas de requetes SQL supplémentaire déclenchée

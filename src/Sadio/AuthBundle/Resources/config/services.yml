@@ -1,4 +1,4 @@
 services:
-#    sadio_anti_spam.example:
-#        class: Sadio\AntiSpamBundle\Example
+#    sadio_auth.example:
+#        class: Sadio\AuthBundle\Example
 #        arguments: ["@service_id", "plain_value", "%parameter%"]

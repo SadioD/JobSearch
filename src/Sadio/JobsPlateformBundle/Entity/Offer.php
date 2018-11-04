@@ -10,6 +10,7 @@ use Doctrine\Common\Collections\ArrayCollection;
  *
  * @ORM\Table(name="jobs_offer")
  * @ORM\Entity(repositoryClass="Sadio\JobsPlateformBundle\Repository\OfferRepository")
+ * @ORM\HasLifecycleCallbacks()
  */
 class Offer
 {
@@ -59,6 +60,21 @@ class Offer
      * @ORM\JoinColumn(nullable=false)
      */
     private $user;
+
+    /**
+     * @var string
+     * @ORM\Column(name="slug", type="text", unique=true)
+     * @ORM\JoinColumn(nullable=false)
+     */
+    private $slug;
+
+    /**
+     * @var \DateTime
+     * @ORM\Column(name="editionDate", type="datetime")
+     * @ORM\JoinColumn(nullable=true)
+     */
+    private $editionDate;
+    
 
     public function __construct(array $donnees = []) {
         foreach($donnees as $key => $value) 
@@ -181,5 +197,23 @@ class Offer
 
         // Since the relation is reversed, we also remove $this (porduct) from the $category
         $category->removeOffer($this);
+    }
+    /**
+     * Increase the number of Offers the user have posted.
+     * The Right Event is PrePersist (The count will increase right before the new Offer is Persisted)
+     * Because we need the change of offers count to be persisted in DataBase
+     * @ORM\PrePersist
+     */
+    public function increaseOffersCount() {
+        $this->user->increaseNumberOfOffers();
+    }
+    /**
+     * Decrease the number of Offers the user have posted.
+     * The Right Event is PreRemove (The count will decrease right before the Offer is removed)
+     * Because If we chose PostRemove, We won't have access to the $offer's methods since it will be removed
+     * @ORM\PreRemove
+     */
+    public function decreaseOffersCount() {
+        $this->user->decreaseNumberOfOffers();
     }// ----------------------------------------------------------------------------------------------------------------------------------
 }

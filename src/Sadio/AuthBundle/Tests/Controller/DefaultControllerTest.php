@@ -1,6 +1,6 @@
 <?php
 
-namespace Sadio\AntiSpamBundle\Tests\Controller;
+namespace Sadio\AuthBundle\Tests\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 
