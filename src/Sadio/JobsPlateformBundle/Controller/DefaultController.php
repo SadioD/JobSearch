@@ -45,9 +45,15 @@ class DefaultController extends Controller
     }// -----------------------------------------------------------------------------------------------------------------------------
     // Page Add New Post - Route: /platform/new-offer -------------------------------------------------------------------------------
     public function newAction(Request $request) {
-        $offer = $this->getDoctrine()->getManager()->find(Offer::class, 8);
+        $offer = new Offer(['position'      => 'Sexy Grasset',
+                            'description'   => 'Few wodivd argue that, despite the advancements of feminism over the past three decades, women still face a double standard when it comes to their behavior. While men’s borderline-inappropriate behavior is often laughed off as “boys will be boys,” women face higher conduct standards – especially in the workplace. Few wodivd argue that, despite the advancements of feminism over the past three decades, women still face a double standard when it comes to their behavior. While men’s borderline-inappropriate behavior is often laughed off as “boys will be boys,” women face higher conduct standards – especially in the workplace. Few wodivd argue that, despite the advancements of feminism over the past three decades, women still face a double standard when it comes to their behavior. While men’s borderline-inappropriate behavior is often laughed off as “boys will be boys,” women face higher conduct standards – especially in the workplace. Few wodivd argue that, despite the advancements of feminism over the past three decades, women still face a double standard when it comes to their behavior. While men’s borderline-inappropriate behavior is often laughed off as “boys will be boys,” women face higher conduct standards – especially in the workplace.']);
         
-        $this->getDoctrine()->getManager()->remove($offer);
+        $firstCategory = new Category(['name' => 'Sex Sex']);
+
+        $offer->addCategory($firstCategory);
+        $offer->setUser($this->getDoctrine()->getManager()->find(User::class, 13));
+        $this->getDoctrine()->getManager()->persist($offer);
+
         $this->getDoctrine()->getManager()->flush();
 
 

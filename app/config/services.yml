@@ -2,6 +2,8 @@
 # https://symfony.com/doc/current/service_container.html
 parameters:
     #parameter_name: value
+    # Ce paramètre permet d'injecter dans le Service Mailer l'addresse email de l'expéditeur
+    admin_email: amasadio@gmail.com
 
 services:
     # default configuration for services in *this* file
@@ -23,6 +25,17 @@ services:
         # but if a service is unused, it's removed anyway
         #exclude: '../../src/Sadio/JobsPlateformBundle/{Entity,Repository,Tests}'
         # On ne rajoute la previous line que 6 ds resource on avait mis '../../src/Sadio/JobsPlateformBundle/*'
+
+    # explicitly configure service (injecting arguments defined above in parameters section)
+    Sadio\JobsPlateformBundle\Services\Mailer\Mailer:
+        arguments:
+            $adminEmailAdress: '%admin_email%'
+    
+    # explicitly configure service (The following service will be called back after each PostPersist Event)
+    Sadio\JobsPlateformBundle\Services\DoctrineListener\OfferCreationListener:
+        tags:
+          - { name: doctrine.event_listener, event: postPersist }
+
 
     
     #### Controllers ############################################################################

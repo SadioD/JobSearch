@@ -37,7 +37,7 @@ class LoadOffer extends Fixture
             $offer->addCategory($firstCategory);
             $offer->addCategory($secndCategory);
 
-            // We tdon't have to create a shortDesc 
+            // We don't have to create a shortDesc 
             // Since Offer method createShortDesc() creates it anytime we persist (creation or update)
            
             // On lie toutes ces annones au User dont id = 13
