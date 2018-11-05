@@ -13,17 +13,17 @@ class LoadOffer extends Fixture
     public function load(ObjectManager $manager) 
     {
         // Lets create a list of offers and categories to be persisted
-        $list = [
+        /*$list = [
             [
-                'position'      => 'Développeur Symfony',
+                'position'      => 'Professeur PHP',
                 'description'   => 'Few wodivd argue that, despite the advancements of feminism over the past three decades, women still face a double standard when it comes to their behavior. While men’s borderline-inappropriate behavior is often laughed off as “boys will be boys,” women face higher conduct standards – especially in the workplace. Few wodivd argue that, despite the advancements of feminism over the past three decades, women still face a double standard when it comes to their behavior. While men’s borderline-inappropriate behavior is often laughed off as “boys will be boys,” women face higher conduct standards – especially in the workplace. Few wodivd argue that, despite the advancements of feminism over the past three decades, women still face a double standard when it comes to their behavior. While men’s borderline-inappropriate behavior is often laughed off as “boys will be boys,” women face higher conduct standards – especially in the workplace. Few wodivd argue that, despite the advancements of feminism over the past three decades, women still face a double standard when it comes to their behavior. While men’s borderline-inappropriate behavior is often laughed off as “boys will be boys,” women face higher conduct standards – especially in the workplace.'
             ],
             [
-                'position'      => 'Développeur Codeigniter',
+                'position'      => 'Professeur Python',
                 'description'   => 'Few wodivd argue that, despite the advancements of feminism over the past three decades, women still face a double standard when it comes to their behavior. While men’s borderline-inappropriate behavior is often laughed off as “boys will be boys,” women face higher conduct standards – especially in the workplace. Few wodivd argue that, despite the advancements of feminism over the past three decades, women still face a double standard when it comes to their behavior. While men’s borderline-inappropriate behavior is often laughed off as “boys will be boys,” women face higher conduct standards – especially in the workplace. Few wodivd argue that, despite the advancements of feminism over the past three decades, women still face a double standard when it comes to their behavior. While men’s borderline-inappropriate behavior is often laughed off as “boys will be boys,” women face higher conduct standards – especially in the workplace. Few wodivd argue that, despite the advancements of feminism over the past three decades, women still face a double standard when it comes to their behavior. While men’s borderline-inappropriate behavior is often laughed off as “boys will be boys,” women face higher conduct standards – especially in the workplace.'
             ],
             [
-                'position'      => 'Développeur Python',
+                'position'      => 'Freelance Symfony 3',
                 'description'   => 'Few wodivd argue that, despite the advancements of feminism over the past three decades, women still face a double standard when it comes to their behavior. While men’s borderline-inappropriate behavior is often laughed off as “boys will be boys,” women face higher conduct standards – especially in the workplace. Few wodivd argue that, despite the advancements of feminism over the past three decades, women still face a double standard when it comes to their behavior. While men’s borderline-inappropriate behavior is often laughed off as “boys will be boys,” women face higher conduct standards – especially in the workplace. Few wodivd argue that, despite the advancements of feminism over the past three decades, women still face a double standard when it comes to their behavior. While men’s borderline-inappropriate behavior is often laughed off as “boys will be boys,” women face higher conduct standards – especially in the workplace. Few wodivd argue that, despite the advancements of feminism over the past three decades, women still face a double standard when it comes to their behavior. While men’s borderline-inappropriate behavior is often laughed off as “boys will be boys,” women face higher conduct standards – especially in the workplace.'
             ]
         ];
@@ -37,21 +37,18 @@ class LoadOffer extends Fixture
             $offer->addCategory($firstCategory);
             $offer->addCategory($secndCategory);
 
-            // We then create a short description for each offer
-            if (strlen($list[$i]['description']) > 500) {
-                $shortDesc = substr($list[$i]['description'], 0, 500);
-                $shortDesc = substr($shortDesc, 0, strrpos($shortDesc, ' ')) . '...';
-            } else {
-                $shortDesc = $list[$i]['description'];
-            }
-            $offer->setShortDesc($shortDesc);
-
-            // On lie toutes ces annones au User dont id = 1
-            $offer->setUser($manager->find(User::class, 9));
+            // We tdon't have to create a shortDesc 
+            // Since Offer method createShortDesc() creates it anytime we persist (creation or update)
+           
+            // On lie toutes ces annones au User dont id = 13
+            $offer->setUser($manager->find(User::class, 13));
 
             // We only persist $offer because of cascade={"persist"} clause
             $manager->persist($offer);
         }
+        $manager->flush();*/
+        $offer = $manager->find(Offer::class, 11);
+        $offer->setPosition('Développeuse Symfony 4');
         $manager->flush();
     }
 }

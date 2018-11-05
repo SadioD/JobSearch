@@ -8,6 +8,8 @@ imports:
 # https://symfony.com/doc/current/best_practices/configuration.html#application-related-configuration
 parameters:
     locale: en
+    # offersPerPage définit le nombre d'offres à afficher par page (Pagination)
+    offersPerPage: 3
 
 framework:
     #esi: ~

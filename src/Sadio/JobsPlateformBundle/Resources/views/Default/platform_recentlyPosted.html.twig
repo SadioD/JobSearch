@@ -3,7 +3,7 @@
     <ul class="ml-3 mt-1">
         {% for job in recentlyPosted if recentlyPosted is not empty %}
             <li>
-                <a class="recentPostItem" href="{{path('sadioJobsP_singlePost', {'id': job.getId})}}">
+                <a class="recentPostItem" href="{{path('sadioJobsP_singlePost', {'slug': job.getSlug})}}">
                     {{ job.getPosition }}
                 </a>
             </li><br />

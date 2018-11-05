@@ -17,18 +17,29 @@ class DefaultController extends Controller
             // throw new NotFoundHttpException('Page "'.$page.'" does not exist.');
             throw $this->createNotFoundException('Page "'.$page.'" does not exist.');
         }
-        // On recupère la liste d'offres depuis la BDD
-        $list = $this->getDoctrine()->getRepository(Offer::class)->findAllWithUser();        
-        //print_r($list[0]['getId']);
+        // On recupère le nombre d'offres à afficher par page depuis le fichier config.yml
+        // Et on recupère aussi la liste d'offres depuis la BDD (notons qu'il s'agit d'un objet Paginator)
+        $offersPerPage = $this->container->getParameter('offersPerPage');
+        $list = $this->getDoctrine()->getRepository(Offer::class)->findAllWithUser($page, $offersPerPage);        
+
+        // On calcule le nombre total de pages (nombre de liens cliquables)
+        $numberOfPages = ceil(count($list) / $offersPerPage);
+
+        // Si le paramètre page (GET) recu est supérieur au nombre total de pages calculé, on retourne une 404
+        if ($page > $numberOfPages) {
+            throw $this->createNotFoundException('Page "'.$page.'" does not exist.');
+        }
         // On affiche la vue  en usant de la méthode longue --> vue dans Sadio/JobsPlateform/Ressources/views/Default/views/default/index.html.twig
-        return $this->render('@SadioJobsPlateform/Default/index.html.twig', ['list' => $list]);
+        return $this->render('@SadioJobsPlateform/Default/index.html.twig', ['list'          => $list,
+                                                                             'page'          => $page,
+                                                                             'numberOfPages' => $numberOfPages]);
     }// -----------------------------------------------------------------------------------------------------------------------------
     // Page Single Post - Route: /platform/offer/{id} -------------------------------------------------------------------------------
-    public function viewAction($id) {
-        $offer = $this->getDoctrine()->getRepository(Offer::class)->findOneWithAllRelations($id);
+    public function viewAction($slug) {
+        $offer = $this->getDoctrine()->getRepository(Offer::class)->findOneWithAllRelations($slug);
 
         if (!$offer) {
-            throw $this->createNotFoundException('No job was found for given information - '. $id);
+            throw $this->createNotFoundException('No job was found for given information - '. $slug);
         }
         return $this->render('@SadioJobsPlateform/Default/view.html.twig', ['offer' => $offer]);
     }// -----------------------------------------------------------------------------------------------------------------------------
@@ -54,11 +65,11 @@ class DefaultController extends Controller
         return $this->render('@SadioJobsPlateform/Default/new.html.twig');
     }// -----------------------------------------------------------------------------------------------------------------------------
     // Page Update Post - Route: /platform/edit-offer/{id} --------------------------------------------------------------------------
-    public function editAction($id, Request $request) {
+    public function editAction($slug, Request $request) {
         if($request->isMethod('POST')) {
             // Save le Formulaire dans la BDD
 
-            $this->processForm('id');
+            $this->processForm('slug');
         }
         return $this->render('@SadioJobsPlateform/Default/edit.html.twig');
     }// -----------------------------------------------------------------------------------------------------------------------------
@@ -78,10 +89,10 @@ class DefaultController extends Controller
     }// -----------------------------------------------------------------------------------------------------------------------------
     /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     // Traite les formulaire d'Ajout et Modification d'Offre ------------------------------------------------------------------------
-    public function processForm($id) {
+    public function processForm($slug) {
         // Save le Flash + redirect
         $this->addFlash('notice', 'The offer has been saved!');
-        return $this->redirectToRoute('sadioJobsP_singlePost', ['id' => $id]);
+        return $this->redirectToRoute('sadioJobsP_singlePost', ['slug' => $slug]);
     }// -----------------------------------------------------------------------------------------------------------------------------
     // Affiche les 3 derniers post sur le template parent base.html ------------------------------------------------------------------------
     public function recentlyPostedAction() {

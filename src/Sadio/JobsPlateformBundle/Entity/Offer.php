@@ -4,6 +4,8 @@ namespace Sadio\JobsPlateformBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 use Doctrine\Common\Collections\ArrayCollection;
+use Gedmo\Mapping\Annotation as Gedmo;
+
 
 /**
  * Offer
@@ -63,15 +65,16 @@ class Offer
 
     /**
      * @var string
-     * @ORM\Column(name="slug", type="text", unique=true)
+     * @Gedmo\Slug(fields={"position"})
+     * @ORM\Column(name="slug", type="string", length=255, unique=true)
      * @ORM\JoinColumn(nullable=false)
      */
     private $slug;
 
     /**
      * @var \DateTime
-     * @ORM\Column(name="editionDate", type="datetime")
-     * @ORM\JoinColumn(nullable=true)
+     * @Gedmo\Timestampable(on="change", field={"position", "description"})
+     * @ORM\Column(name="editionDate", type="datetime", nullable=true)
      */
     private $editionDate;
     
@@ -116,6 +119,14 @@ class Offer
      * @return \Sadio\AuthBundle\Entity\User
      */
     public function getUser() { return $this->user; }
+    /**
+     * @return string
+     */
+    public function getSlug() { return $this->slug; }
+    /**
+     * @return \DateTime
+     */
+    public function getEditionDate() { return $this->editionDate; }
     // ----------------------------------------------------------------------------------------------------------------------------------
     // SETTERS ---------------------------------------------------------------------------------------------------------------------------
     /**
@@ -171,6 +182,26 @@ class Offer
         $user->addOffer($this);
         
         return $this;
+    }
+    /**
+     * @param string $slug
+     * @return Offer
+     */
+    public function setSlug($slug)
+    {
+        $this->slug = $slug;
+
+        return $this;
+    }
+    /**
+     * @param \DateTime $editionDate
+     * @return Offer
+     */
+    public function setEditionDate($editionDate)
+    {
+        $this->editionDate = $editionDate;
+
+        return $this;
     }// ----------------------------------------------------------------------------------------------------------------------------------
     // OTHERS ---------------------------------------------------------------------------------------------------------------------------
     /**
@@ -215,5 +246,20 @@ class Offer
      */
     public function decreaseOffersCount() {
         $this->user->decreaseNumberOfOffers();
-    }// ----------------------------------------------------------------------------------------------------------------------------------
+    }
+    /**
+     * Create a short Desc based on given description.
+     * The Right Event are PrePersist and PreUpdate (callback befor each new sumbit and update)
+     * @ORM\PrePersist
+     * @ORM\PreUpdate
+     */
+    public function createShortDesc() {
+         if (strlen($this->getDescription()) > 500) {
+            $shortDesc = substr($this->getDescription(), 0, 500);
+            $shortDesc = substr($shortDesc, 0, strrpos($shortDesc, ' ')) . '...';
+        } else {
+            $shortDesc = $this->getDescription();
+        }
+        $this->setShortDesc($shortDesc);
+    }// ----------------------------------------------------------------------------------------------------------------------------------        
 }

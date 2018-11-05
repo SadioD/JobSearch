@@ -10,11 +10,9 @@ sadioJobsP_homepage:
 
 # Page Single Post
 sadioJobsP_singlePost:
-    path:     /offer/{id}
+    path:     /offer/{slug}
     defaults: 
         _controller: SadioJobsPlateformBundle:Default:view
-    requirements:
-        id: \d+
 
 # Page Add New Post
 sadioJobsP_newPost:
@@ -24,11 +22,9 @@ sadioJobsP_newPost:
 
 # Page Update Post
 sadioJobsP_editPost:
-    path:     /edit-offer/{id}
+    path:     /edit-offer/{slug}
     defaults: 
         _controller: SadioJobsPlateformBundle:Default:edit
-    requirements:
-        id: \d+
 
 # Page Delete Post
 sadioJobsP_deletePost:
