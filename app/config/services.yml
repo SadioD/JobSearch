@@ -16,7 +16,7 @@ services:
         # if you need to do this, you can override this setting on individual services
         public: false
     
-    #### Services ##############################################################################
+    #### Services Declaration ############################################################################
     # makes classes in src/Sadio/JobsPlateform/Services/ available to be used as services
     # this creates a service per class whose id is the fully-qualified class name
     Sadio\JobsPlateformBundle\Services\:
@@ -25,14 +25,21 @@ services:
         # but if a service is unused, it's removed anyway
         #exclude: '../../src/Sadio/JobsPlateformBundle/{Entity,Repository,Tests}'
         # On ne rajoute la previous line que 6 ds resource on avait mis '../../src/Sadio/JobsPlateformBundle/*'
+    
+    Sadio\AuthBundle\Services\:
+        resource: '../../src/Sadio/AuthBundle/Services/*'
+    
+    CoreBundle\Services\:
+        resource: '../../src/CoreBundle/Services/*'
 
+    #### Services Configuration ############################################################################
     # explicitly configure service (injecting arguments defined above in parameters section)
-    Sadio\JobsPlateformBundle\Services\Mailer\Mailer:
+    CoreBundle\Services\Mailer\Mailer:
         arguments:
             $adminEmailAdress: '%admin_email%'
     
     # explicitly configure service (The following service will be called back after each PostPersist Event)
-    Sadio\JobsPlateformBundle\Services\DoctrineListener\OfferCreationListener:
+    CoreBundle\Services\DoctrineListener\EntityCreationListener:
         tags:
           - { name: doctrine.event_listener, event: postPersist }
 

@@ -47,8 +47,8 @@ class LoadOffer extends Fixture
             $manager->persist($offer);
         }
         $manager->flush();*/
-        $offer = $manager->find(Offer::class, 11);
+        /*$offer = $manager->find(Offer::class, 11);
         $offer->setPosition('Développeuse Symfony 4');
-        $manager->flush();
+        $manager->flush();*/
     }
 }

@@ -39,5 +39,11 @@ class LoadUser extends Fixture
             $manager->persist($user);
         }
         $manager->flush();*/
+        $user = new User(['name'     => 'TestUser',
+                          'email'    => 'amasadio85@gmail.com',
+                          'password' => 'huiuihuii']);
+        
+        $manager->persist($user);
+        $manager->flush();
     }
 }

@@ -1,8 +1,6 @@
 <?php
 // Ce Service permet d'envoyer des emails de notification
-namespace Sadio\JobsPlateformBundle\Services\Mailer;
-
-use Sadio\JobsPlateformBundle\Entity\Offer;
+namespace CoreBundle\Services\Mailer;
 
 class Mailer 
 {
@@ -21,14 +19,14 @@ class Mailer
         $this->adminEmail  = $adminEmailAdress;
     }// --------------------------------------------------------------------------------------------------------------------------------
     // METHODS -------------------------------------------------------------------------------------------------
-    public function sendNotification(Offer $offer) {
+    public function sendNotification($email, $messageTitle, $messageContent) {
         // On définit le message (Sujet + corps)
-        $message = new \Swift_Message('Confirmation de publication');
-        $message->addPart('Votre offre ' . $offer->getPosition() . ' a bien été publiée sur le site ');
+        $message = new \Swift_Message($messageTitle);
+        $message->addPart($messageContent);
         
         // On définit le destinataire et l'expéditeur
-        $message->setFrom($this->adminEmail)
-                ->setTo($offer->getUser()->getEmail());
+        $message->setTo($email)
+                ->setFrom($this->adminEmail);
 
         // Enfin on envoie le message
         $this->mailer->send($message);

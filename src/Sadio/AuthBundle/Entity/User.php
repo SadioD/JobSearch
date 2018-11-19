@@ -47,6 +47,12 @@ class User
     private $numberOfOffers;
 
     /**
+     * @var \DateTime
+     * @ORM\Column(name="creationDate", type="datetime")
+     */
+    private $creationDate;
+
+    /**
      * Offer is The Owner of this Relation 
      * @ORM\OneToMany(targetEntity="Sadio\JobsPlateformBundle\Entity\Offer", mappedBy="user", cascade={"remove"})
      */
@@ -60,7 +66,9 @@ class User
 				$this->$method($value);
 			}
         }
+        $this->creationDate = new \DateTime();
         $this->offers = new ArrayCollection();
+        $this->numberOfOffers = 0;
     }// ----------------------------------------------------------------------------------------------------------------------------------
     // GETTERS ---------------------------------------------------------------------------------------------------------------------------
     /**
@@ -87,6 +95,10 @@ class User
      * @return \Doctrine\Common\Collections\Collection
      */
     public function getOffers() { return $this->offers; }
+    /**
+     * @return \DateTime
+     */
+    public function getCreationDate() { return $this->creationDate; }
     // ----------------------------------------------------------------------------------------------------------------------------------
     // SETTERS ---------------------------------------------------------------------------------------------------------------------------
     /**
@@ -126,6 +138,16 @@ class User
     public function setNumberOfOffers($numberOfOffers)
     {
         $this->numberOfOffers = $numberOfOffers;
+
+        return $this;
+    }
+    /**
+     * @param \DateTime $creationDate
+     * @return User
+     */
+    public function setCreationDate($creationDate)
+    {
+        $this->creationDate = $creationDate;
 
         return $this;
     }// ----------------------------------------------------------------------------------------------------------------------------------
