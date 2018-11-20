@@ -21,7 +21,7 @@ class Purge
         $this->mailer = $mailerObject;
     }// ------------------------------------------------------------------------------------------------------------------------
     // METHODS -------------------------------------------------------------------------------------------------
-    public function purgeUserList(User $user, LifecycleEventArgs $arg) 
+    public function purgeUserList(LifecycleEventArgs $arg) 
     {
         // On recupère l'entity manager
         // Et la liste des users pour vérifier s'il faut les supprimer
@@ -29,13 +29,14 @@ class Purge
         $userList = $em->getRepository(User::class)->findAll();
         
         foreach ($userList as $user) {
-            // pour chaque User, calcule la date de référence pour la comparer à celle de Creation du User
-            $referenceDate = new \DateTime($user->getCreationDate());
+            // pour chaque User, calcule la date de référence pour la comparer à celle d'aujourd'hui
+            $todaysDate    = new \DateTime();
+            $referenceDate = new \DateTime($user->getCreationDate()->format('Y-m-d H:i:s'));
             $referenceDate->modify('+10 day');
             
             // Ensuite supprime les Users qui n'ont publié aucune offre et dont le compte a plus  de 10 jours 
             // Mais avant on leur envoie un email d'information
-            if ($user->getNumberOfOffers() < 1 && $user->getCreationDate() >= $referenceDate) 
+            if ($user->getNumberOfOffers() < 1 && $todaysDate->format('Y-m-d') >= $referenceDate->format('Y-m-d')) 
             {
                 $message = 'Depuis la création de votre compte,  vous n\'avez publié aucune offre. Votre va être supprimé';
                 $this->mailer->sendNotification($user->getEmail(), 'Notice : Suppression de compte', $message);

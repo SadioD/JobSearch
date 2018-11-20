@@ -27,7 +27,7 @@ class Offer
 
     /**
      * @var string
-     * @ORM\Column(name="position", type="string", length=255)
+     * @ORM\Column(name="position", type="string", length=191)
      */
     private $position;
 
@@ -66,7 +66,7 @@ class Offer
     /**
      * @var string
      * @Gedmo\Slug(fields={"position"})
-     * @ORM\Column(name="slug", type="string", length=255, unique=true)
+     * @ORM\Column(name="slug", type="string", length=191, unique=true)
      * @ORM\JoinColumn(nullable=false)
      */
     private $slug;

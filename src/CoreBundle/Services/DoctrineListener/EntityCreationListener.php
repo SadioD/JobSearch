@@ -44,7 +44,7 @@ class EntityCreationListener
         elseif ($entity instanceof User) 
         {
             // Si c'est un entité de User, on appelle la métode permettant de purger la liste des User
-            $this->purgator->purgeUserList();
+            $this->purgator->purgeUserList($arg);
         } else {
             // Si c'est une autre entité, on ne fait rien
             return;
