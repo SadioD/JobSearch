@@ -1,5 +1,9 @@
 {% extends "@SadioJobsPlateform/platform_layout.html.twig" %}
     {# Page CSS AND TITLE --------------------------------------------------------------------------------------------------------- #}
+    {% block stylesheets %}
+        {{ parent() }}
+        <link rel="stylesheet" href="{{ asset('assets/css/jobsPlatform_form.css') }}" />
+    {% endblock %}
     {% block title %}
         {{ parent() }} - New Offer
     {% endblock title %}

@@ -1,0 +1,13 @@
+/* Buttons */
+#submitButton {
+    background: #edbf3a;
+    color: black;
+}
+
+#submitButton:hover {
+    background: #f0ce69;
+}
+
+#submitIcon {
+     color: black;
+}

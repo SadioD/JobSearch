@@ -5,9 +5,12 @@ namespace Sadio\JobsPlateformBundle\Controller;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
+use Symfony\Component\HttpFoundation\Session\SessionInterface;
 use Sadio\JobsPlateformBundle\Entity\Offer;
 use Sadio\JobsPlateformBundle\Entity\Category;
 use Sadio\AuthBundle\Entity\User;
+use Sadio\JobsPlateformBundle\Form\OfferType;
+use Sadio\JobsPlateformBundle\Form\OfferEditType;
 
 class DefaultController extends Controller
 {
@@ -44,40 +47,26 @@ class DefaultController extends Controller
         return $this->render('@SadioJobsPlateform/Default/view.html.twig', ['offer' => $offer]);
     }// -----------------------------------------------------------------------------------------------------------------------------
     // Page Add New Post - Route: /platform/new-offer -------------------------------------------------------------------------------
-    public function newAction(Request $request) {
-        $offer = new Offer(['position'      => 'Sexy Grasset',
-                            'description'   => 'Few wodivd argue that, despite the advancements of feminism over the past three decades, women still face a double standard when it comes to their behavior. While men’s borderline-inappropriate behavior is often laughed off as “boys will be boys,” women face higher conduct standards – especially in the workplace. Few wodivd argue that, despite the advancements of feminism over the past three decades, women still face a double standard when it comes to their behavior. While men’s borderline-inappropriate behavior is often laughed off as “boys will be boys,” women face higher conduct standards – especially in the workplace. Few wodivd argue that, despite the advancements of feminism over the past three decades, women still face a double standard when it comes to their behavior. While men’s borderline-inappropriate behavior is often laughed off as “boys will be boys,” women face higher conduct standards – especially in the workplace. Few wodivd argue that, despite the advancements of feminism over the past three decades, women still face a double standard when it comes to their behavior. While men’s borderline-inappropriate behavior is often laughed off as “boys will be boys,” women face higher conduct standards – especially in the workplace.']);
-        
-        $firstCategory = new Category(['name' => 'Sex Sex']);
+    public function newAction(Request $request, SessionInterface $session) {
+        $offer = new Offer();
+        $form  = $this->createForm(OfferType::class, $offer);
 
-        $offer->addCategory($firstCategory);
-        $offer->setUser($this->getDoctrine()->getManager()->find(User::class, 13));
-        $this->getDoctrine()->getManager()->persist($offer);
-
-        $this->getDoctrine()->getManager()->flush();
-
-
-        if($request->isMethod('POST')) {
-            // Save le Formulaire 
-            // On crée une short Description pour chaque offre si la description est trop longue
-            /*for($i=0; $i<count($list); $i++) {
-            if (strlen($list[$i]['description']) > 500) {
-                $list[$i]['shortDesc'] = substr($list[$i]['description'], 0, 500);
-                $list[$i]['shortDesc'] = substr($list[$i]['shortDesc'], 0, strrpos($list[$i]['shortDesc'], ' ')) . '...';
-            }          
-            }*/
-            $this->processForm('id');
+        // Si le formulaire a été soumis et qu'il est valide => on traite le formulaire
+        if($request->isMethod('POST') && $form->handleRequest($request)->isValid()) {
+            return $this->processForm($offer, 5);
         }
-        return $this->render('@SadioJobsPlateform/Default/new.html.twig');
+        return $this->render('@SadioJobsPlateform/Default/new.html.twig', ['form' => $form->createView()]);
     }// -----------------------------------------------------------------------------------------------------------------------------
     // Page Update Post - Route: /platform/edit-offer/{id} --------------------------------------------------------------------------
-    public function editAction($slug, Request $request) {
-        if($request->isMethod('POST')) {
-            // Save le Formulaire dans la BDD
+    public function editAction($slug, Request $request, SessionInterface $session) {
+        $offer = $this->getDoctrine()->getRepository(Offer::class)->findOneWithAllRelations($slug);
+        $form  = $this->createForm(OfferEditType::class, $offer);
 
-            $this->processForm('slug');
+        // Si le formulaire a été soumis et qu'il est valide => on traite le formulaire
+        if($request->isMethod('POST') && $form->handleRequest($request)->isValid()) {
+            return $this->processForm($offer, 5);
         }
-        return $this->render('@SadioJobsPlateform/Default/edit.html.twig');
+        return $this->render('@SadioJobsPlateform/Default/edit.html.twig', ['form' => $form->createView()]);
     }// -----------------------------------------------------------------------------------------------------------------------------
     // Page Delete Post - Route: /platform/delete-offer/{id} ------------------------------------------------------------------------
     public function deleteAction($id) {
@@ -95,10 +84,14 @@ class DefaultController extends Controller
     }// -----------------------------------------------------------------------------------------------------------------------------
     /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     // Traite les formulaire d'Ajout et Modification d'Offre ------------------------------------------------------------------------
-    public function processForm($slug) {
-        // Save le Flash + redirect
+    public function processForm($offer, $userId) {
+        // Link Offer to User, then Save Form + Flash and redirect
+        $offer->setUser($this->getDoctrine()->getManager()->find(User::class, $userId));
+        $this->getDoctrine()->getManager()->persist($offer);
+        $this->getDoctrine()->getManager()->flush();
+        
         $this->addFlash('notice', 'The offer has been saved!');
-        return $this->redirectToRoute('sadioJobsP_singlePost', ['slug' => $slug]);
+        return $this->redirectToRoute('sadioJobsP_singlePost', ['slug' => $offer->getSlug()]);
     }// -----------------------------------------------------------------------------------------------------------------------------
     // Affiche les 3 derniers post sur le template parent base.html ------------------------------------------------------------------------
     public function recentlyPostedAction() {

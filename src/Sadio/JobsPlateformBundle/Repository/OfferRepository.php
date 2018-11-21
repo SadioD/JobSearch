@@ -29,10 +29,17 @@ class OfferRepository extends \Doctrine\ORM\EntityRepository
            ->where('o.slug = :slug')
            ->setParameter('slug', $offerSlug);
         
-        return $qb->getQuery()->setMaxResults(1)->getOneOrNullResult();
-        // return $qb->getQuery()->getSingleResult(); meme chose que la méthode en haut renvoie un objet
-        // Mais si la méthode ne trouve rien => elle déclenche une erreur 
-        // => a éviter si on veut délcencher soit même une erreur 404
+        // Ici nous utilisons un Bloc Try/Catch pour $qb->getQuery()->getSingleResult()
+        // En effet getSingleResult() déclenche automatiquement une erreur s'il ne trouve rien => catch permet
+        // d'attraper cette Exception afin que le script continue
+        try {
+            return $qb->getQuery()->getSingleResult();
+        } 
+        catch(\Exception $e) { }
+        // return $qb->getQuery()->setMaxResults(1)->getOneOrNullResult(); meme chose que la méthode en haut, 
+        // renvoie un objet. Mais si la méthode ne trouve rien => aucune erreur n'est déclenchée => pas besoin du 
+        // bloc try/catch. Cependant, Vu que le Max result est 1, s'il existe plusieurs catégories dans la jointure
+        // Seul le premier résultat sera sélectionné.
     }
     // Permet de récupérer une Offre avec ses catégories => quand on fait offer.getCategories dans TWIG, 
     // Pas de requetes SQL supplémentaire déclenchée

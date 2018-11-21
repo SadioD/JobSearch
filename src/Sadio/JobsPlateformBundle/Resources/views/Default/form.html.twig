@@ -1,3 +1,23 @@
-<p>
-    Hello I'm the included form.. Yes
-</p>
+{{ form_start(form)}}
+
+    {# Les erreurs générales du formulaire. #}
+    {{ form_errors(form) }}
+
+    {# Génération du label + error + widget pour les champs. #}
+    {% if form.position is defined %}
+    {{ form_row(form.position) }}
+        
+    {% endif %}
+    {{ form_row(form.description) }}
+    {{ form_row(form.categories) }}
+
+    {# Génération automatique des champs pas encore écrits. Dans cet exemple, ce serait le champ CSRF (géré automatiquement par Symfony !) 
+    et tous les champs cachés (type « hidden »). #}
+    {{ form_rest(form) }}
+
+    <button type="submit" class="btn btn-warning btn-block" id="submitButton">
+        <i class="fa fa-floppy-o" id="submitIcon"></i> SUBMIT OFFER
+    </button>
+
+{# Fermeture de la balise <form> du formulaire HTML #}
+{{ form_end(form) }}

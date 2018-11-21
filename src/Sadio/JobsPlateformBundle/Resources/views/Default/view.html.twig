@@ -12,6 +12,11 @@
     {% block jobsPlatform_body %}
         <div class="row">
             <div class="col-12 pt-30">
+                <div class="text-center" style="color:green;">
+                    {% for message in app.flashes('notice') %}
+                        <i class="fa fa-check" style="color:green;"></i> {{ message }}
+                    {% endfor %}
+                </div>
                 <ul class="list-group mt-20 mb-30">
                     <li class="list-group-item">
                         <h3>
