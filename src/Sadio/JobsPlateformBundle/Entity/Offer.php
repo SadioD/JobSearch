@@ -78,6 +78,12 @@ class Offer
      */
     private $editionDate;
     
+    /**
+     * Offer is The Owner of This Relation
+     * @ORM\OneToOne(targetEntity="Sadio\JobsPlateformBundle\Entity\Attachment", cascade={"persist"})
+     * @ORM\JoinColumn(nullable=true)
+     */
+    private $attachment;
 
     public function __construct(array $donnees = []) {
         foreach($donnees as $key => $value) 
@@ -127,6 +133,10 @@ class Offer
      * @return \DateTime
      */
     public function getEditionDate() { return $this->editionDate; }
+    /**
+     * @return \Sadio\JobsPlateformBundle\Entity\Attachment
+     */
+    public function getAttachment() { return $this->attachment; }
     // ----------------------------------------------------------------------------------------------------------------------------------
     // SETTERS ---------------------------------------------------------------------------------------------------------------------------
     /**
@@ -202,6 +212,16 @@ class Offer
         $this->editionDate = $editionDate;
 
         return $this;
+    }
+    /**
+     * @param \Sadio\JobsPlateformBundle\Entity\Attachment $attachment
+     * @return Offer
+     */
+    public function setAttachment(\Sadio\JobsPlateformBundle\Entity\Attachment $attachment = null)
+    {
+        $this->attachment = $attachment;
+
+        return $this;
     }// ----------------------------------------------------------------------------------------------------------------------------------
     // OTHERS ---------------------------------------------------------------------------------------------------------------------------
     /**
@@ -261,5 +281,5 @@ class Offer
             $shortDesc = $this->getDescription();
         }
         $this->setShortDesc($shortDesc);
-    }// ----------------------------------------------------------------------------------------------------------------------------------        
+    }// ----------------------------------------------------------------------------------------------------------------------------------            
 }

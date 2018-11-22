@@ -48,11 +48,14 @@
                         
                         <!-- Buttons -->
                         <div>
-                            <p class="ml-3 ml-sm-0">
-                                <a class="btn btn-warning" id="editButton" href="{{path('sadioJobsP_editPost', {'slug': offer.getSlug})}}">
-                                    <i class="fa fa-pencil-square-o" id="editIcon"></i> Edit
+                            <p class="ml-1 ml-sm-0">
+                                <a class="btn btn-dark editButton" href="#">
+                                    <i class="fa fa-cloud-download editIcon"></i> Load
                                 </a>
-                                <a class="btn btn-dark" id="deleteButton" href="{{path('sadioJobsP_deletePost', {'id': offer.getId})}}">
+                                <a class="btn btn-dark editButton" href="{{path('sadioJobsP_editPost', {'slug': offer.getSlug})}}">
+                                    <i class="fa fa-pencil-square-o editIcon"></i> Edit
+                                </a>
+                                <a class="btn btn-dark deleteButton" href="{{path('sadioJobsP_deletePost', {'id': offer.getId})}}">
                                     <i class="fa fa-trash-o"></i> Delete
                                 </a>
                             </p>

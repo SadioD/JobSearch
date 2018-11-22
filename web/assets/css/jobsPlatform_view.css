@@ -1,24 +1,26 @@
 /* Buttons */
-#editButton {
+.editButton {
     background: #edbf3a;
     color: black;
 }
 
-#editButton:hover {
+.editButton:hover {
     background: #f0ce69;
+    color: black;
 }
 
-#editIcon {
+.editIcon {
      color: black;
 }
 
-#deleteButton {
+.deleteButton {
     color: #edbf3a;
     background: #2c2c2c;
 }
 
-#deleteButton:hover {
+.deleteButton:hover {
     background: #4e4c4c;
+    color: #edbf3a;
 }
 
 /* Single Post */

@@ -8,6 +8,7 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
+use Sadio\JobsPlateformBundle\Form\AttachmentType;
 
 class OfferType extends AbstractType
 {
@@ -20,7 +21,8 @@ class OfferType extends AbstractType
                 ->add('description', TextareaType::class)
                 ->add('categories' , EntityType::class, ['class'        => 'SadioJobsPlateformBundle:Category',
                                                          'choice_label' => 'name',
-                                                         'multiple'     =>  true]);
+                                                         'multiple'     =>  true])
+                ->add('attachment' , AttachmentType::class);
     }
     /**
      * Permet a Doctrine de savoir que cette classe est liée à l'entité Offer
