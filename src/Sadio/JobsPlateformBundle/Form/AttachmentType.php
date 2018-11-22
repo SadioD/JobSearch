@@ -14,6 +14,7 @@ class AttachmentType extends AbstractType
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
+        // Le troisième paramètre correspond aux options du champ (label, required, etc.)
         $builder->add('file', FileType::class, ['label' => 'Upload File (doc|pdf) - Max 200Ko']);
     }
     /**

@@ -24,6 +24,10 @@ class OfferRepository extends \Doctrine\ORM\EntityRepository
         // On ajoute ensuite User
            ->leftJoin('o.user', 'u')
            ->addSelect('u')
+        
+        // On ajoute Enfin la pj Attachment
+           ->leftJoin('o.attachment', 'a')
+           ->addSelect('a')
 
         // Enfin on met la condition
            ->where('o.slug = :slug')

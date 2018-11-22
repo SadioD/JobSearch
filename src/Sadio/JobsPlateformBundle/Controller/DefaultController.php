@@ -7,6 +7,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Symfony\Component\HttpFoundation\Session\SessionInterface;
 use Sadio\JobsPlateformBundle\Entity\Offer;
+use Sadio\JobsPlateformBundle\Entity\Attachment;
 use Sadio\JobsPlateformBundle\Entity\Category;
 use Sadio\AuthBundle\Entity\User;
 use Sadio\JobsPlateformBundle\Form\OfferType;
@@ -64,6 +65,25 @@ class DefaultController extends Controller
 
         // Si le formulaire a été soumis et qu'il est valide => on traite le formulaire
         if($request->isMethod('POST') && $form->handleRequest($request)->isValid()) {
+            // Si aucun fichier n'a été posté mais que l'attribut url n'est pas vide => 
+            // Cas où l'user a mis à jour l'offre en supprimant l'ancienne PJ => on suuprime Attachment de Offer
+            if ($offer->getAttachment()->getFile() == null && $offer->getAttachment()->getUrl() !== null) {
+                // On recupère l'id de l'Attachment à Supprimer
+                $em           = $this->getDoctrine()->getManager();
+                $attachmentId = $offer->getAttachment()->getId();
+                
+                // On save la mise à jour de l'offre (sans l'attachment)
+                $offer->setAttachment(null);
+                $em->persist($offer);
+                
+                // On supprime l'ancien attachment de la BDD et du dossier assets/docs (via postDelete() de Attachment)
+                $em->remove($em->find(Attachment::class, $attachmentId));
+                $em->flush();
+
+                // On save le message Flash et on redirige
+                $this->addFlash('notice', 'The offer has been saved!');
+                return $this->redirectToRoute('sadioJobsP_singlePost', ['slug' => $offer->getSlug()]);
+            }
             return $this->processForm($offer, 5);
         }
         return $this->render('@SadioJobsPlateform/Default/edit.html.twig', ['form' => $form->createView()]);

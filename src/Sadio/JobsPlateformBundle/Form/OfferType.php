@@ -22,7 +22,7 @@ class OfferType extends AbstractType
                 ->add('categories' , EntityType::class, ['class'        => 'SadioJobsPlateformBundle:Category',
                                                          'choice_label' => 'name',
                                                          'multiple'     =>  true])
-                ->add('attachment' , AttachmentType::class);
+                ->add('attachment' , AttachmentType::class, ['required' => false]);
     }
     /**
      * Permet a Doctrine de savoir que cette classe est liée à l'entité Offer

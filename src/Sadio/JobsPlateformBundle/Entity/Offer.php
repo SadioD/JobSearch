@@ -80,7 +80,7 @@ class Offer
     
     /**
      * Offer is The Owner of This Relation
-     * @ORM\OneToOne(targetEntity="Sadio\JobsPlateformBundle\Entity\Attachment", cascade={"persist"})
+     * @ORM\OneToOne(targetEntity="Sadio\JobsPlateformBundle\Entity\Attachment", cascade={"persist", "remove"})
      * @ORM\JoinColumn(nullable=true)
      */
     private $attachment;
