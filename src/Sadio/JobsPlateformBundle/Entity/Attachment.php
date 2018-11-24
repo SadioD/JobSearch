@@ -4,6 +4,7 @@ namespace Sadio\JobsPlateformBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * Attachment
@@ -37,6 +38,11 @@ class Attachment
     /**
      * @var UploadedFile
      * Permet d'hydrater la pièce jointe
+     * @Assert\File(
+     *      maxSize	         = "200k",
+     *      mimeTypes        = {"application/pdf", "application/msword"},
+     *      maxSizeMessage   = "The File's too large. it must be {{ limit }}MB at max.",
+     *      mimeTypesMessage = "The File's format must be either PDF or Word")
      */
     private $file;
     

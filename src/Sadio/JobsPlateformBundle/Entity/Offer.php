@@ -5,6 +5,7 @@ namespace Sadio\JobsPlateformBundle\Entity;
 use Doctrine\ORM\Mapping as ORM;
 use Doctrine\Common\Collections\ArrayCollection;
 use Gedmo\Mapping\Annotation as Gedmo;
+use Symfony\Component\Validator\Constraints as Assert;
 
 
 /**
@@ -28,6 +29,7 @@ class Offer
     /**
      * @var string
      * @ORM\Column(name="position", type="string", length=191)
+     * @Assert\Length(min=10, minMessage="Offer's title must have at least {{ limit }} characters.")
      */
     private $position;
 
@@ -40,6 +42,7 @@ class Offer
     /**
      * @var string
      * @ORM\Column(name="description", type="text")
+     * @Assert\NotBlank(message="Offer's description cannot be blank")
      */
     private $description;
 
@@ -53,6 +56,7 @@ class Offer
      * Offer is The Owner of This Relation
      * @ORM\ManyToMany(targetEntity="Sadio\JobsPlateformBundle\Entity\Category", inversedBy="offers", cascade={"persist"})
      * @ORM\JoinColumn(nullable=false)
+     * @Assert\Valid()
      */
     private $categories;
 
@@ -82,6 +86,7 @@ class Offer
      * Offer is The Owner of This Relation
      * @ORM\OneToOne(targetEntity="Sadio\JobsPlateformBundle\Entity\Attachment", cascade={"persist", "remove"})
      * @ORM\JoinColumn(nullable=true)
+     * @Assert\Valid()
      */
     private $attachment;
 
