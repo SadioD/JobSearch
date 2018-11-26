@@ -13,19 +13,19 @@ class LoadUser extends Fixture
         // Lets create a list of users to be persisted
         /*$users = [
             [
-                'name'           => 'Banque Mondiale',
+                'username'           => 'Banque Mondiale',
                 'email'          => 'aaa@yahoo.dr',
                 'password'       => 'abcdef',
                 'numberOfOffers' => 1
             ],
             [
-                'name'           => 'Le Crédit Lyonnais',
+                'username'           => 'Le Crédit Lyonnais',
                 'email'          => 'agugga@yahoo.dr',
                 'password'       => 'cdef',
                 'numberOfOffers' => 1
             ],
             [
-                'name'           => 'La Poste Mobile',
+                'username'           => 'La Poste Mobile',
                 'email'          => 'ayutygg@yahoo.dr',
                 'password'       => 'abc',
                 'numberOfOffers' => 1
@@ -39,7 +39,7 @@ class LoadUser extends Fixture
             $manager->persist($user);
         }
         $manager->flush();*/
-        $user = new User(['name'     => 'foujithTestUser',
+        $user = new User(['username'     => 'foujithTestUser',
                           'email'    => 'ahimasaoijjd85@jiookgmail.com',
                           'password' => 'hhiuiui89oihuii']);
         

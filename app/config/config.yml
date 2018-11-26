@@ -33,6 +33,10 @@ framework:
     assets: ~
     php_errors:
         log: true
+    
+    # Add this line for FOSUserBundle
+    templating:
+        engines: ['twig']
 
 # Twig Configuration
 twig:
@@ -66,6 +70,14 @@ doctrine:
         naming_strategy: doctrine.orm.naming_strategy.underscore
         auto_mapping: true
 
+# FOSUserBundle duquel hérite AuthBundle
+fos_user:
+    db_driver:     orm                          # Le type de BDD à utiliser, nous utilisons l'ORM de Doctrine
+    firewall_name: main                         # Le nom du firewall derrière lequel on utilisera ces utilisateurs
+    user_class:    Sadio\AuthBundle\Entity\User # La classe de l'entité User que nous utilisons
+    from_email:
+        address:   "%mailer_user%"
+        sender_name: "JobSearch"
 
 # Stof\DoctrineExtensionsBundle configuration (Extensions Sluggable, etc.)
 stof_doctrine_extensions:

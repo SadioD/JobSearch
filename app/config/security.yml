@@ -1,11 +1,20 @@
 # To get started with security, check out the documentation:
 # https://symfony.com/doc/current/security.html
 security:
+    encoders:
+        Sadio\AuthBundle\Entity\User: bcrypt	     # bcrypt est l'encodeur des mots de passe
+    
+    role_hierarchy:
+        ROLE_ADMIN:       [ROLE_AUTEUR, ROLE_MODERATEUR]       # L'Admin hérite des droits d'auteur et de modérateur
+        ROLE_SUPER_ADMIN: [ROLE_ADMIN, ROLE_ALLOWED_TO_SWITCH] # Le SuperAdmin hérite des droits de l'ADMIN
+
 
     # https://symfony.com/doc/current/security.html#b-configuring-how-users-are-loaded
+    # Le nom du provider d'usateurs est fos_userbundle. ca aurait pu etre amadou
     providers:
-        in_memory:
-            memory: ~
+        fos_userbundle:
+            id: fos_user.user_provider.username
+
 
     firewalls:
         # disables authentication for assets and the profiler, adapt it according to your needs
@@ -14,11 +23,23 @@ security:
             security: false
 
         main:
-            anonymous: ~
             # activate different ways to authenticate
-
             # https://symfony.com/doc/current/security.html#a-configuring-how-your-users-will-authenticate
             #http_basic: ~
-
             # https://symfony.com/doc/current/security/form_login_setup.html
             #form_login: ~
+            pattern:      ^/                         # Ce parefeu gère toutes les url commencant par / (=> toute sles urls du site)
+            anonymous:    true	                     # Le parefeu permettra aux anonymes de passer. (=> On bloquera les accès de certaines pages via le controle d'accès)
+            provider:     fos_userbundle
+            form_login:
+                login_path: fos_user_security_login  # Le nom de la route pour accéder à la page d'authentification 
+                check_path: fos_user_security_check	 # le nom de la route pour accéder à la page de vérification des identifiants postés par le form d'authentification'
+            logout:
+                path:       fos_user_security_logout # Le nom de la route pour se déconnecter
+                target:     fos_user_security_login  # Le nom de la route vers laquel l'user sera redirigé après avoir été déconnecté  
+            remember_me:
+                secret:     "%secret%"               # L'option remember_me permet d'éviter à l'User d'entrer encore ses identifiants pour se connecter (cookies). %secret% est la variale définie dans parameters.yml, qui save le token permettant de se rappeler du User.
+
+    
+    access_control:
+        - { path: ^/admin, roles: ROLE_ADMIN }       # Toutes les urls commencant par /admin sont protégées => il faut etre ADMIN

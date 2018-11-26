@@ -4,6 +4,7 @@ namespace Sadio\AuthBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 use Doctrine\Common\Collections\ArrayCollection;
+use FOS\UserBundle\Model\User as BaseUser;
 
 /**
  * User
@@ -11,34 +12,32 @@ use Doctrine\Common\Collections\ArrayCollection;
  * @ORM\Table(name="auth_user")
  * @ORM\Entity(repositoryClass="Sadio\AuthBundle\Repository\UserRepository")
  */
-class User
+class User extends BaseUser
 {
     // ATTR + CONSTR --------------------------------------------------------------------------------------------------------------------
+    // Cette classe hérite de FOSUserBundle => elle recupère les attribut et méthodes de ce dernier
+    /* Liste de certains Attributs: 
+            username, 
+            email, 
+            enabled (true => Inscription validée, false => Inscription non validée)
+            password
+            lastLogin
+            roles
+       
+       Liste de certaines Méthodes: 
+            getters
+            setters
+            hasRole($role) => return bool
+            removeRole($role)
+            addRole($role)
+            setRoles(array $roles) */
     /**
      * @var int
      * @ORM\Column(name="id", type="integer")
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="AUTO")
      */
-    private $id;
-
-    /**
-     * @var string
-     * @ORM\Column(name="name", type="string", length=191)
-     */
-    private $name;
-
-    /**
-     * @var string
-     * @ORM\Column(name="email", type="string", length=191, unique=true)
-     */
-    private $email;
-
-    /**
-     * @var string
-     * @ORM\Column(name="password", type="string", length=191, unique=true)
-     */
-    private $password;
+    protected $id;
 
     /**
      * @var int
@@ -59,6 +58,8 @@ class User
     private $offers;
 
     public function __construct(array $donnees = []) {
+        parent::__construct();
+
         foreach($donnees as $key => $value) 
         {
 			$method = 'set' . ucfirst($key);
@@ -71,25 +72,6 @@ class User
         $this->numberOfOffers = 0;
     }// ----------------------------------------------------------------------------------------------------------------------------------
     // GETTERS ---------------------------------------------------------------------------------------------------------------------------
-    /**
-     * @return int
-     */
-    public function getId() { return $this->id; }
-    /**
-     * @return string
-     */
-    public function getName() { return $this->name; }
-    /**
-     * @return string
-     */
-    public function getEmail() { return $this->email; }
-    /**
-     * @return string
-     */
-    public function getPassword() { return $this->password; }
-    /**
-     * @return int
-     */
     public function getNumberOfOffers() { return $this->numberOfOffers; }
     /**
      * @return \Doctrine\Common\Collections\Collection
@@ -101,36 +83,6 @@ class User
     public function getCreationDate() { return $this->creationDate; }
     // ----------------------------------------------------------------------------------------------------------------------------------
     // SETTERS ---------------------------------------------------------------------------------------------------------------------------
-    /**
-     * @param string $name
-     * @return User
-     */
-    public function setName($name)
-    {
-        $this->name = $name;
-
-        return $this;
-    }
-    /**
-     * @param string $email
-     * @return User
-     */
-    public function setEmail($email)
-    {
-        $this->email = $email;
-
-        return $this;
-    }
-    /**
-     * @param string $password
-     * @return User
-     */
-    public function setPassword($password)
-    {
-        $this->password = $password;
-
-        return $this;
-    }
     /**
      * @param integer $numberOfOffers
      * @return User

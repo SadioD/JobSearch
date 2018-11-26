@@ -1,0 +1,12 @@
+#_submit {
+    background: #edbf3a;
+    color: black;
+}
+
+#_submit:hover {
+    background: #f0ce69;
+}
+
+#submitIcon {
+     color: black;
+}

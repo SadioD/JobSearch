@@ -2,8 +2,3 @@
 core_homepage:
     path:     /
     defaults: { _controller: CoreBundle:AppMain:home }
-
-# Page de Contact
-core_contactpage:
-    path:     /contact-me
-    defaults: { _controller: CoreBundle:AppMain:contact }

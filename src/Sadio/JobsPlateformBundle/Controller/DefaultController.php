@@ -30,8 +30,8 @@ class DefaultController extends Controller
         $numberOfPages = ceil(count($list) / $offersPerPage);
 
         // Si le paramètre page (GET) recu est supérieur au nombre total de pages calculé, on retourne une 404
-        if ($page > $numberOfPages) {
-            throw $this->createNotFoundException('Page "'.$page.'" does not exist.');
+        if ($page > $numberOfPages && count($list) > 0) {
+            throw $this->createNotFoundException('Paazge "'.$page.'" does not exist.');
         }
         // On affiche la vue  en usant de la méthode longue --> vue dans Sadio/JobsPlateform/Ressources/views/Default/views/default/index.html.twig
         return $this->render('@SadioJobsPlateform/Default/index.html.twig', ['list'          => $list,

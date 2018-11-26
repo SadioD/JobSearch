@@ -19,8 +19,10 @@ class AppKernel extends Kernel
             new CoreBundle\CoreBundle(),
             new Sadio\JobsPlateformBundle\SadioJobsPlateformBundle(),
             new Sadio\AuthBundle\SadioAuthBundle(),
-            // Permet de rendre certaines actions (editionDate, slugDefinition) automatiques (lors de Prepersist, etc.)
+            // Permet de rendre certaines actions (editionDate, slugDefinition) automatiques (lors de Prepersist, etc.) => Getme
             new Stof\DoctrineExtensionsBundle\StofDoctrineExtensionsBundle(),
+            // Permet d'utiliser le FOSUserBundle (Sécurité, espace membre)
+            new FOS\UserBundle\FOSUserBundle(),
         ];
 
         if (in_array($this->getEnvironment(), ['dev', 'test'], true)) {
