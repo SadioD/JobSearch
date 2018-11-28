@@ -42,8 +42,7 @@ services:
     CoreBundle\Services\DoctrineListener\EntityCreationListener:
         tags:
           - { name: doctrine.event_listener, event: postPersist }
-
-
+    
     
     #### Controllers ############################################################################
     # controllers are imported separately to make sure they're public
@@ -61,7 +60,7 @@ services:
     CoreBundle\Controller\:
         resource: '../../src/CoreBundle/Controller'
         public: true
-        tags: ['controller.service_arguments']        
+        tags: ['controller.service_arguments']            
 
 
     #### DataFixtures ##########################################################################

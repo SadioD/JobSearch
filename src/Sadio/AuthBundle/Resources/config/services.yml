@@ -2,3 +2,7 @@ services:
 #    sadio_auth.example:
 #        class: Sadio\AuthBundle\Example
 #        arguments: ["@service_id", "plain_value", "%parameter%"]
+    #sadio_auth.controller.register:
+    #    class: Sadio\AuthBundle\Controller\RegistrationController
+    #    arguments: ['@service_container']
+    #    public: true

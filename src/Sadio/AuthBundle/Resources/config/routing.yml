@@ -1,3 +1,9 @@
-sadio_auth_homepage:
-    path:     /login
-    defaults: { _controller: SadioAuthBundle:Security:login }
+# Page de Connexion
+#sadio_auth_homepage:
+#    path:     /login
+#    defaults: { _controller: SadioAuthBundle:Security:login }
+
+# Page d'Inscriprion
+#sadio_auth_registration:
+#    path:     /register/
+#    defaults: { _controller: SadioAuthBundle:Registration:register }

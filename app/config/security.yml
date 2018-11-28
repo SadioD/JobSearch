@@ -42,4 +42,6 @@ security:
 
     
     access_control:
-        - { path: ^/admin, roles: ROLE_ADMIN }       # Toutes les urls commencant par /admin sont protégées => il faut etre ADMIN
+        - { path: ^/admin,       roles: ROLE_ADMIN }                                   # Toutes les urls commencant par /admin sont protégées => il faut etre ADMIN
+        - { path: ^/register/$,  allow_if: "is_anonymous() and !is_authenticated()" }  # L'url d'inscription ne peut être accessible que par les Users qui ne sont pas authentifiés
+        - { path: /login,        allow_if: "is_anonymous() and !is_authenticated()" }  # L'url d'inscription ne peut être accessible que par les Users qui ne sont pas authentifiés
