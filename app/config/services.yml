@@ -34,14 +34,24 @@ services:
 
     #### Services Configuration ############################################################################
     # explicitly configure service (injecting arguments defined above in parameters section)
-    CoreBundle\Services\Mailer\Mailer:
+    CoreBundle\Services\Mailer:
         arguments:
             $adminEmailAdress: '%admin_email%'
     
     # explicitly configure service (The following service will be called back after each PostPersist Event)
-    CoreBundle\Services\DoctrineListener\EntityCreationListener:
+    CoreBundle\Services\EventListeners\DoctrineListeners\EntityCreationListener:
         tags:
           - { name: doctrine.event_listener, event: postPersist }
+    
+    # The following service will be called back after each PreUpdate Event
+    CoreBundle\Services\EventListeners\DoctrineListeners\EntityUpdateListener:
+        tags:
+          - { name: doctrine.event_listener, event: preUpdate }
+
+    # This Subscriber (Listener) will be called each time a new FOSUser will be registered
+    CoreBundle\Services\EventListeners\FOSListeners\RegistrationListener:
+        tags:
+          - { name: kernel.event_subscriber }
     
     
     #### Controllers ############################################################################

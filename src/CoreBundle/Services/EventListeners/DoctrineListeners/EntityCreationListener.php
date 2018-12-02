@@ -1,13 +1,13 @@
 <?php
-// Ce Service est un callBack qui sera appelé après chaque persist d'un entité (Offer, User, etc.)
+// Ce Service est un callBack qui sera appelé après chaque persist d'une entité (Offer, User, etc.)
 // Sa méthode postPersist() sera exécutée à chaque PostPersist Event
 // Celle-ci appellera les méthodes d'autres Services [sendNotification() pour Offer, purgeUserList() pour User, etc.]
-namespace CoreBundle\Services\DoctrineListener;
+namespace CoreBundle\Services\EventListeners\DoctrineListeners;
 
 use Sadio\JobsPlateformBundle\Entity\Offer;
 use Sadio\AuthBundle\Entity\User;
-use Sadio\AuthBundle\Services\Purge\Purge;
-use CoreBundle\Services\Mailer\Mailer;
+use Sadio\AuthBundle\Services\Purge;
+use CoreBundle\Services\Mailer;
 use Doctrine\Common\Persistence\Event\LifecycleEventArgs;
 
 class EntityCreationListener 
@@ -19,7 +19,7 @@ class EntityCreationListener
     private $mailer;
 
     /**
-     * Service Purge
+     * Service Sadio\AuthBundle\Services\Purge
      */
     private $purgator;
 

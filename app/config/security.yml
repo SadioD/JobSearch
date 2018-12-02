@@ -5,7 +5,7 @@ security:
         Sadio\AuthBundle\Entity\User: bcrypt	     # bcrypt est l'encodeur des mots de passe
     
     role_hierarchy:
-        ROLE_ADMIN:       [ROLE_AUTEUR, ROLE_MODERATEUR]       # L'Admin hérite des droits d'auteur et de modérateur
+        ROLE_ADMIN:       [ROLE_AUTEUR]                        # L'Admin hérite des droits d'auteur et de modérateur
         ROLE_SUPER_ADMIN: [ROLE_ADMIN, ROLE_ALLOWED_TO_SWITCH] # Le SuperAdmin hérite des droits de l'ADMIN
 
 

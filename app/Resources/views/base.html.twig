@@ -20,7 +20,7 @@
     <body>
         <div class="oz-body-wrap">
             
-            <!-- Header/ Nav -->
+            <!-- Header/ Nav - Menu -->
             <header class="default-header">
                 <div class="container-fluid">
                     <div class="header-wrap">
@@ -36,18 +36,28 @@
                                     <a class="menuLinks" href="{{path('sadioJobsP_homepage')}}">
                                         <span style="font-weight: bold">Platform</span>
                                     </a>
-                                    <a class="menuLinks" href="{{path('sadioJobsP_newPost')}}">
-                                        <span style="font-weight: bold">New Offer</span>
-                                    </a>
-                                    <a class="menuLinks" href="{{path('fos_user_security_login')}}">
-                                        <span style="font-weight: bold">Login</span>
-                                    </a>
-                                    <a class="menuLinks" href="{{path('fos_user_registration_register')}}">
-                                        <span style="font-weight: bold">Register</span>
-                                    </a>
-                                    <a class="menuLinks" href="{{path('fos_user_security_logout')}}">
-                                        <span style="font-weight: bold">Logout</span>
-                                    </a>
+                                    
+                                    {# If user is AUTEUR OR ADMIN #}
+                                    {% if is_granted('ROLE_AUTEUR') %}
+                                        <a class="menuLinks" href="{{path('sadioJobsP_newPost')}}">
+                                            <span style="font-weight: bold">New Offer</span>
+                                        </a>
+                                    {% endif %}
+                                    
+                                    {# If user is online #}
+                                    {% if app.user %}
+                                        <a class="menuLinks" href="{{path('fos_user_security_logout')}}">
+                                            <span style="font-weight: bold">Logout</span>
+                                        </a>
+                                    {# If user is offline #}
+                                    {% elseif not app.user %}
+                                        <a class="menuLinks" href="{{path('fos_user_security_login')}}">
+                                            <span style="font-weight: bold">Login</span>
+                                        </a>
+                                        <a class="menuLinks" href="{{path('fos_user_registration_register')}}">
+                                            <span style="font-weight: bold">Register</span>
+                                        </a>
+                                    {% endif %}
                                 </nav>
                                 <div class="menu-bar"><span class="lnr lnr-menu"></span></div>
                             </div>

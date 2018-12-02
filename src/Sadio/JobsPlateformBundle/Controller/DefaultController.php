@@ -12,6 +12,8 @@ use Sadio\JobsPlateformBundle\Entity\Category;
 use Sadio\AuthBundle\Entity\User;
 use Sadio\JobsPlateformBundle\Form\OfferType;
 use Sadio\JobsPlateformBundle\Form\OfferEditType;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
+use Symfony\Component\Security\Core\Exception\AccessDeniedException;
 
 class DefaultController extends Controller
 {
@@ -47,26 +49,32 @@ class DefaultController extends Controller
         }
         return $this->render('@SadioJobsPlateform/Default/view.html.twig', ['offer' => $offer]);
     }// -----------------------------------------------------------------------------------------------------------------------------
-    // Page Add New Post - Route: /platform/new-offer -------------------------------------------------------------------------------
+    /**
+     * Page Add New Post - Route: /platform/new-offer -------------------------------------------------------------------------------
+     * @Security("has_role('ROLE_AUTEUR')")
+     */
     public function newAction(Request $request, SessionInterface $session) {
         $offer = new Offer();
         $form  = $this->createForm(OfferType::class, $offer);
 
         // Si le formulaire a été soumis et qu'il est valide => on traite le formulaire
         if($request->isMethod('POST') && $form->handleRequest($request)->isValid()) {
-            return $this->processForm($offer, 5);
+            return $this->processForm($offer, $this->getUser()->getId());
         }
         return $this->render('@SadioJobsPlateform/Default/new.html.twig', ['form' => $form->createView()]);
     }// -----------------------------------------------------------------------------------------------------------------------------
-    // Page Update Post - Route: /platform/edit-offer/{id} --------------------------------------------------------------------------
+    /**
+     * Page Update Post - Route: /platform/edit-offer/{id} --------------------------------------------------------------------------
+     * @Security("has_role('ROLE_AUTEUR')")
+     */
     public function editAction($slug, Request $request, SessionInterface $session) {
         $offer = $this->getDoctrine()->getRepository(Offer::class)->findOneWithAllRelations($slug);
         $form  = $this->createForm(OfferEditType::class, $offer);
 
         // Si le formulaire a été soumis et qu'il est valide => on traite le formulaire
         if($request->isMethod('POST') && $form->handleRequest($request)->isValid()) {
-            // Si aucun fichier n'a été posté mais que l'attribut url n'est pas vide => 
-            // Cas où l'user a mis à jour l'offre en supprimant l'ancienne PJ => on suuprime Attachment de Offer
+            /*// Cas où l'user a mis à jour l'offre en supprimant l'ancienne PJ => 
+            // Si aucun fichier n'a été posté mais que l'attribut url n'est pas vide =>  on suuprime Attachment de Offer
             if ($offer->getAttachment()->getFile() == null && $offer->getAttachment()->getUrl() !== null) {
                 // On recupère l'id de l'Attachment à Supprimer
                 $em           = $this->getDoctrine()->getManager();
@@ -83,13 +91,19 @@ class DefaultController extends Controller
                 // On save le message Flash et on redirige
                 $this->addFlash('notice', 'The offer has been saved!');
                 return $this->redirectToRoute('sadioJobsP_singlePost', ['slug' => $offer->getSlug()]);
-            }
-            return $this->processForm($offer, 5);
+            }*/
+            return $this->processForm($offer, $this->getUser()->getId());
         }
         return $this->render('@SadioJobsPlateform/Default/edit.html.twig', ['form' => $form->createView()]);
     }// -----------------------------------------------------------------------------------------------------------------------------
     // Page Delete Post - Route: /platform/delete-offer/{id} ------------------------------------------------------------------------
     public function deleteAction($id) {
+        // Si l'User n'est pas un Admin => Exception
+        if (!$this->get('security.authorization_checker')->isGranted('ROLE_ADMIN')) 
+        {
+            throw new AccessDeniedException('Only the Web Master is allowed to delete Offers. Please contact him to do so...');
+        }
+        // Si l'user est un ADMIN => on supprime l'offre
         $offer = $this->getDoctrine()->getManager()->find(Offer::class, $id);
 
         if (!$offer) {

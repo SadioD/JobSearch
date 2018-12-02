@@ -1,6 +1,6 @@
 <?php
 // Ce Service permet d'envoyer des emails de notification
-namespace CoreBundle\Services\Mailer;
+namespace CoreBundle\Services;
 
 class Mailer 
 {
