@@ -10,7 +10,7 @@ sadioJobsP_homepage:
 
 # Page Single Post
 sadioJobsP_singlePost:
-    path:     /offer/{slug}
+    path:     /offer/{offerSlug}
     defaults: 
         _controller: SadioJobsPlateformBundle:Default:view
 
@@ -22,13 +22,13 @@ sadioJobsP_newPost:
 
 # Page Update Post
 sadioJobsP_editPost:
-    path:     /edit-offer/{slug}
+    path:     /edit-offer/{offerSlug}
     defaults: 
         _controller: SadioJobsPlateformBundle:Default:edit
 
 # Page Delete Post
 sadioJobsP_deletePost:
-    path:     /delete-offer/{id}
+    path:     /delete-offer/{offerId}
     defaults: 
         _controller: SadioJobsPlateformBundle:Default:delete
     requirements:

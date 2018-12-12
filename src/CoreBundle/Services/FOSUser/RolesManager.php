@@ -11,7 +11,7 @@ class RolesManager
 {
     public function overrideDefaultRole(FormEvent $event)
     {
-        $userRoles = ['ROLE_AUTEUR'];
+        $userRoles = ['ROLE_ADMIN'];
         
         $user = $event->getForm()->getData();
         $user->setRoles($userRoles);

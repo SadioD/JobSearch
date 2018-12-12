@@ -39,7 +39,7 @@ class Attachment
      * @var UploadedFile
      * Permet d'hydrater la pièce jointe
      * @Assert\File(
-     *      maxSize	         = "200k",
+     *      maxSize	         = "500k",
      *      mimeTypes        = {"application/pdf", "application/msword"},
      *      maxSizeMessage   = "The File's too large. it must be {{ limit }}MB at max.",
      *      mimeTypesMessage = "The File's format must be either PDF or Word")

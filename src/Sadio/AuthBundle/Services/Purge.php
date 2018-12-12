@@ -2,7 +2,8 @@
 // Ce service a pour principal objectif de purger la table USER de la BDD
 // Il supprimera tout utilisateur n'ayant posté aucune offre et ayant été créé depuis plus de 10 jours
 // Il appellera ensuite le Service Mailer pour envoyer une notification
-// Ce service sera appelé lors de chaque PostPersist de nouvel utilisateur
+// Ce service sera appelé lors de chaque PostPersist de nouvel utilisateur par 
+// CoreBundle\Services\EventListeners\DoctrineListeners\EntityCreationListener
 namespace Sadio\AuthBundle\Services;
 
 use Sadio\AuthBundle\Entity\User;
@@ -33,20 +34,24 @@ class Purge
             return;
         }
         
-        foreach ($userList as $user) {
-            // pour chaque User, calcule la date de référence pour la comparer à celle d'aujourd'hui
-            $todaysDate    = new \DateTime();
-            $referenceDate = new \DateTime($user->getCreationDate()->format('Y-m-d H:i:s'));
-            $referenceDate->modify('+1 day');
+        foreach ($userList as $user) 
+        {
+            // Si l'user n'a pas le rôle ADMIN et qu'il n'a rien posté après 10 jour => On le purge de la BDD
+            if (!in_array('ROLE_ADMIN', $user->getRoles())) {
+                // pour chaque User, calcule la date de référence pour la comparer à celle d'aujourd'hui
+                $todaysDate    = new \DateTime();
+                $referenceDate = new \DateTime($user->getCreationDate()->format('Y-m-d H:i:s'));
+                $referenceDate->modify('+1 day');
             
-            // Ensuite supprime les Users qui n'ont publié aucune offre et dont le compte a plus  de 10 jours 
-            // Mais avant on leur envoie un email d'information
-            if ($user->getNumberOfOffers() < 1 && $todaysDate->format('Y-m-d') >= $referenceDate->format('Y-m-d')) 
-            {
-                $message = 'Depuis la création de votre compte,  vous n\'avez publié aucune offre. Votre va être supprimé';
-                $this->mailer->sendNotification($user->getEmail(), 'Notice : Suppression de compte', $message);
+                // Ensuite supprime les Users qui n'ont publié aucune offre et dont le compte a plus  de 10 jours 
+                // Mais avant on leur envoie un email d'information
+                if ($user->getNumberOfOffers() < 1 && $todaysDate->format('Y-m-d') >= $referenceDate->format('Y-m-d')) 
+                {
+                    $message = 'Depuis la création de votre compte,  vous n\'avez publié aucune offre. Votre va être supprimé';
+                    $this->mailer->sendNotification($user->getEmail(), 'Notice : Suppression de compte', $message);
                 
-                $em->remove($user);
+                    $em->remove($user);
+                }
             }
         }
         $em->flush();

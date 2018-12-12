@@ -12,6 +12,8 @@ use Sadio\JobsPlateformBundle\Entity\Category;
 use Sadio\AuthBundle\Entity\User;
 use Sadio\JobsPlateformBundle\Form\OfferType;
 use Sadio\JobsPlateformBundle\Form\OfferEditType;
+use Sadio\JobsPlateformBundle\Services\Purge;
+// Acces Role Control
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Symfony\Component\Security\Core\Exception\AccessDeniedException;
 
@@ -33,19 +35,19 @@ class DefaultController extends Controller
 
         // Si le paramètre page (GET) recu est supérieur au nombre total de pages calculé, on retourne une 404
         if ($page > $numberOfPages && count($list) > 0) {
-            throw $this->createNotFoundException('Paazge "'.$page.'" does not exist.');
+            throw $this->createNotFoundException('Page "'.$page.'" does not exist.');
         }
         // On affiche la vue  en usant de la méthode longue --> vue dans Sadio/JobsPlateform/Ressources/views/Default/views/default/index.html.twig
         return $this->render('@SadioJobsPlateform/Default/index.html.twig', ['list'          => $list,
                                                                              'page'          => $page,
                                                                              'numberOfPages' => $numberOfPages]);
     }// -----------------------------------------------------------------------------------------------------------------------------
-    // Page Single Post - Route: /platform/offer/{id} -------------------------------------------------------------------------------
-    public function viewAction($slug) {
-        $offer = $this->getDoctrine()->getRepository(Offer::class)->findOneWithAllRelations($slug);
+    // Page Single Post - Route: /platform/offer/{offerSlug} --------------------------------------------------------------------------- 
+    public function viewAction($offerSlug) {
+        $offer = $this->getDoctrine()->getRepository(Offer::class)->findOneWithAllRelations($offerSlug);
 
         if (!$offer) {
-            throw $this->createNotFoundException('No job was found for given information - '. $slug);
+            throw $this->createNotFoundException('No job was found for given information - '. $offerSlug);
         }
         return $this->render('@SadioJobsPlateform/Default/view.html.twig', ['offer' => $offer]);
     }// -----------------------------------------------------------------------------------------------------------------------------
@@ -53,7 +55,7 @@ class DefaultController extends Controller
      * Page Add New Post - Route: /platform/new-offer -------------------------------------------------------------------------------
      * @Security("has_role('ROLE_AUTEUR')")
      */
-    public function newAction(Request $request, SessionInterface $session) {
+    public function newAction(Request $request) {
         $offer = new Offer();
         $form  = $this->createForm(OfferType::class, $offer);
 
@@ -64,50 +66,43 @@ class DefaultController extends Controller
         return $this->render('@SadioJobsPlateform/Default/new.html.twig', ['form' => $form->createView()]);
     }// -----------------------------------------------------------------------------------------------------------------------------
     /**
-     * Page Update Post - Route: /platform/edit-offer/{id} --------------------------------------------------------------------------
+     * Page Update Post - Route: /platform/edit-offer/{offerSlug} --------------------------------------------------------------------------
      * @Security("has_role('ROLE_AUTEUR')")
      */
-    public function editAction($slug, Request $request, SessionInterface $session) {
-        $offer = $this->getDoctrine()->getRepository(Offer::class)->findOneWithAllRelations($slug);
+    public function editAction($offerSlug, Request $request, Purge $purgator) {
+        $offer = $this->getDoctrine()->getRepository(Offer::class)->findOneWithAllRelations($offerSlug);
+        
+        if (!$offer) {
+            throw $this->createNotFoundException('No job was found for given information - '. $offerSlug);
+        }
+        // On recupère le form et on vérifie s'il a été soumis et qu'il est valide 
+        // Si Oui, => on le traite
         $form  = $this->createForm(OfferEditType::class, $offer);
-
-        // Si le formulaire a été soumis et qu'il est valide => on traite le formulaire
-        if($request->isMethod('POST') && $form->handleRequest($request)->isValid()) {
-            /*// Cas où l'user a mis à jour l'offre en supprimant l'ancienne PJ => 
-            // Si aucun fichier n'a été posté mais que l'attribut url n'est pas vide =>  on suuprime Attachment de Offer
-            if ($offer->getAttachment()->getFile() == null && $offer->getAttachment()->getUrl() !== null) {
-                // On recupère l'id de l'Attachment à Supprimer
-                $em           = $this->getDoctrine()->getManager();
-                $attachmentId = $offer->getAttachment()->getId();
-                
-                // On save la mise à jour de l'offre (sans l'attachment)
-                $offer->setAttachment(null);
-                $em->persist($offer);
-                
-                // On supprime l'ancien attachment de la BDD et du dossier assets/docs (via postDelete() de Attachment)
-                $em->remove($em->find(Attachment::class, $attachmentId));
-                $em->flush();
-
-                // On save le message Flash et on redirige
+        if($request->isMethod('POST') && $form->handleRequest($request)->isValid()) 
+        {
+            // Si l'user a mis à jour l'offre en supprimant l'ancienne PJ => attribut url non vide
+            // => On Purge la BDD et le dossier docs pour supprimer la PJ orpheline (vu ue l'User n'en veut plus)
+            if ($purgator->purgedOldAttachments($offer)) {
                 $this->addFlash('notice', 'The offer has been saved!');
-                return $this->redirectToRoute('sadioJobsP_singlePost', ['slug' => $offer->getSlug()]);
-            }*/
-            return $this->processForm($offer, $this->getUser()->getId());
+                return $this->redirectToRoute('sadioJobsP_singlePost', ['offerSlug' => $offer->getSlug()]);
+            } else {
+                return $this->processForm($offer, $this->getUser()->getId());
+            }
         }
         return $this->render('@SadioJobsPlateform/Default/edit.html.twig', ['form' => $form->createView()]);
     }// -----------------------------------------------------------------------------------------------------------------------------
-    // Page Delete Post - Route: /platform/delete-offer/{id} ------------------------------------------------------------------------
-    public function deleteAction($id) {
+    // Page Delete Post - Route: /platform/delete-offer/{offerId} -----------------------------------------------------------------------
+    public function deleteAction($offerId) {
         // Si l'User n'est pas un Admin => Exception
         if (!$this->get('security.authorization_checker')->isGranted('ROLE_ADMIN')) 
         {
-            throw new AccessDeniedException('Only the Web Master is allowed to delete Offers. Please contact him to do so...');
+            throw new AccessDeniedException('Note: Only the Web Master is allowed to delete Offers. Please contact him to do so...');
         }
         // Si l'user est un ADMIN => on supprime l'offre
-        $offer = $this->getDoctrine()->getManager()->find(Offer::class, $id);
+        $offer = $this->getDoctrine()->getManager()->find(Offer::class, $offerId);
 
         if (!$offer) {
-            throw $this->createNotFoundException('No job was found for given information - '. $id);
+            throw $this->createNotFoundException('No job was found for given information - '. $offerId);
         }
         $this->getDoctrine()->getManager()->remove($offer);
         $this->getDoctrine()->getManager()->flush();
@@ -125,7 +120,7 @@ class DefaultController extends Controller
         $this->getDoctrine()->getManager()->flush();
         
         $this->addFlash('notice', 'The offer has been saved!');
-        return $this->redirectToRoute('sadioJobsP_singlePost', ['slug' => $offer->getSlug()]);
+        return $this->redirectToRoute('sadioJobsP_singlePost', ['offerSlug' => $offer->getSlug()]);
     }// -----------------------------------------------------------------------------------------------------------------------------
     // Affiche les 3 derniers post sur le template parent base.html ------------------------------------------------------------------------
     public function recentlyPostedAction() {

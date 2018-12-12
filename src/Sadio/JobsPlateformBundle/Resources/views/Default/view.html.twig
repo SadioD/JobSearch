@@ -54,11 +54,11 @@
                                         <i class="fa fa-cloud-download editIcon"></i> Load
                                     </a>
                                 {% endif %}
-                                {% if is_granted('ROLE_AUTEUR') %}
-                                    <a class="btn btn-dark editButton" href="{{path('sadioJobsP_editPost', {'slug': offer.getSlug})}}">
+                                {% if is_granted('ROLE_AUTEUR')  and app.user.username == offer.user.username %}
+                                    <a class="btn btn-dark editButton" href="{{path('sadioJobsP_editPost', {'offerSlug': offer.getSlug})}}">
                                         <i class="fa fa-pencil-square-o editIcon"></i> Edit
                                     </a>
-                                    <a class="btn btn-dark deleteButton" href="{{path('sadioJobsP_deletePost', {'id': offer.getId})}}">
+                                    <a class="btn btn-dark deleteButton" href="{{path('sadioJobsP_deletePost', {'offerId': offer.getId})}}">
                                         <i class="fa fa-trash-o"></i> Delete
                                     </a>
                                 {% endif %}

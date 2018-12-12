@@ -35,8 +35,8 @@ class OfferEditType extends AbstractType
                 return;
             }
             // A partir d'ici $offer contient les données de l'entité Offer (vide si new-offer ou non si edit)
-            // Ex: Je décide de disable le champ position si l'user a pour email agugga@yahoo.dr
-            if ($offer->getUser()->getEmail() == 'agugga@yahoo.dr') {
+            // Ex: Je décide de disable le champ position si l'user a pour email admin@yahoo.dr
+            if ($offer->getUser()->getEmail() == 'admin@abc.fr') {
                 $event->getForm()->add('position', TextType::class, ['disabled' => true]);
             }
         });

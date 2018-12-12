@@ -20,7 +20,7 @@
                 <p class="lead">Find your dream job...</p>
                 <div class="list-group mt-20 mb-30">
                     {% for offer in list if list is not empty %}
-                        <a href="{{path('sadioJobsP_singlePost', {'slug': offer.slug})}}" class="list-group-item list-group-item-action offersListItem">
+                        <a href="{{path('sadioJobsP_singlePost', {'offerSlug': offer.slug})}}" class="list-group-item list-group-item-action offersListItem">
                             <h4>
                                 {{ offer.position }}
                                 <small class="d-none d-sm-block float-right text-muted">
