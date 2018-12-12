@@ -1,0 +1,21 @@
+{% extends "base.html.twig" %}
+{# Page Body
+------------------------------------------------------------------------------------------------------------------ #}
+{% block body %}
+<div class="story-content">
+    <h2>Oops! An Error Occurred: {{ status_text }}</h2>
+    <hr class="d-none d-sm-block">
+
+    <div class="row">
+        <div class="col-12 pt-30">
+            <p class="lead">
+                The server returned a "{{ status_code }} {{ status_text }}".
+            </p>
+            <p>
+                We were not able to find the requested page. Sorry for any inconvenience caused.
+            </p>
+        </div>
+    </div>
+</div>
+{% endblock body %}
+{# ---------------------------------------------------------------------------------------------------------------------------- #}
