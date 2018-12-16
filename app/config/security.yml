@@ -39,6 +39,7 @@ security:
                 target:     fos_user_security_login  # Le nom de la route vers laquel l'user sera redirigé après avoir été déconnecté  
             remember_me:
                 secret:     "%secret%"               # L'option remember_me permet d'éviter à l'User d'entrer encore ses identifiants pour se connecter (cookies). %secret% est la variale définie dans parameters.yml, qui save le token permettant de se rappeler du User.
+            logout_on_user_change: true
 
     
     access_control:

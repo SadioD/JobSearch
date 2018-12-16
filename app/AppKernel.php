@@ -23,6 +23,8 @@ class AppKernel extends Kernel
             new Stof\DoctrineExtensionsBundle\StofDoctrineExtensionsBundle(),
             // Permet d'utiliser le FOSUserBundle (Sécurité, espace membre)
             new FOS\UserBundle\FOSUserBundle(),
+            // Permet d'utiliser Assetic
+            new Symfony\Bundle\AsseticBundle\AsseticBundle(),
         ];
 
         if (in_array($this->getEnvironment(), ['dev', 'test'], true)) {

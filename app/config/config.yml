@@ -86,6 +86,25 @@ stof_doctrine_extensions:
       sluggable: true
       timestampable: true
 
+# Assetic
+assetic:
+    debug:          '%kernel.debug%'
+    use_controller: '%kernel.debug%'
+    # the path to the node executable
+    node: /usr/bin/nodejs
+    filters:
+        cssrewrite: ~
+        #uglifyjs2:
+            # the path to the uglifyjs executable
+            #bin: ../../app/Resources/nodes_modules/uglify-js/bin/uglifyjs
+        #uglifycss:
+            # the path to the uglifyccs executable
+            #bin: ../../app/Resources/nodes_modules/uglifycss
+        jsqueeze:   ~
+        scssphp:
+          formatter: 'Leafo\ScssPhp\Formatter\Compressed'
+
+
 # Swiftmailer Configuration
 swiftmailer:
     transport: '%mailer_transport%'
