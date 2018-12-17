@@ -10,11 +10,6 @@
         
         <!-- Bootstrap theme CSS + App CSS -->
         {% block stylesheets %}
-            {#<link rel="stylesheet" href="{{ asset('assets/vendor/css/bootstrap.min.css') }}" />
-            <link rel="stylesheet" href="{{ asset('assets/vendor/css/font-awesome.min.css') }}" />
-            <link rel="stylesheet" href="{{ asset('assets/vendor/css/linearicons.css') }}" />
-            <link rel="stylesheet" href="{{ asset('assets/vendor/css/main.css') }}" />
-            <link rel="stylesheet" href="{{ asset('assets/css/base.layout.css') }}" />#}
             <link rel="stylesheet" href="{{ asset('assets/vendor/css/bootstrap.min.css') }}" />
             <link rel="stylesheet" href="{{ asset('assets/vendor/css/font-awesome.min.css') }}" />
             {% stylesheets 'assets/vendor/css/linearicons.css'
@@ -126,10 +121,6 @@
 
         <!-- Bootstrap theme JS + Main JS-->
         {% block javascripts %}
-            {#<script src="{{ asset('assets/vendor/js/vendor/jquery-3.2.1.min.js') }}"></script>
-            <script src="{{ asset('assets/vendor/js/vendor/popper.min.js') }}"></script>
-            <script src="{{ asset('assets/vendor/js/vendor/bootstrap.min.js') }}"></script> n'est pas inclu
-            <script src="{{ asset('assets/vendor/js/main.js') }}"></script>#}
             <script src="{{ asset('assets/vendor/js/vendor/jquery-3.2.1.min.js') }}"></script>
             <script src="{{ asset('assets/vendor/js/vendor/popper.min.js') }}"></script>
             <script src="{{ asset('assets/vendor/js/bootstrap.min.js') }}"></script>
