@@ -2,8 +2,6 @@
 # https://symfony.com/doc/current/service_container.html
 parameters:
     #parameter_name: value
-    # Ce paramètre permet d'injecter dans le Service Mailer l'addresse email de l'expéditeur
-    admin_email: amasadio@gmail.com
 
 services:
     # default configuration for services in *this* file
@@ -36,7 +34,7 @@ services:
     # explicitly configure service (injecting arguments defined above in parameters section)
     CoreBundle\Services\Mailer:
         arguments:
-            $adminEmailAdress: '%admin_email%'
+            $adminEmailAdress: '%mailer_user%'
     
     # explicitly configure service (The following service will be called back after each PostPersist Event)
     CoreBundle\Services\EventListeners\DoctrineListeners\EntityCreationListener:
@@ -69,7 +67,7 @@ services:
 
 
     #### DataFixtures ##########################################################################
-    # Ce code permet d'autoriser les dossiers DataFixtures à etre utiliser commer service (load:fixtures)
+    # Ce code permet d'autoriser les dossiers DataFixtures à etre utiliser comme service (load:fixtures)
     Sadio\AuthBundle\DataFixtures\:
         resource: '../../src/Sadio/AuthBundle/DataFixtures'
         tags: ['doctrine.fixture.orm']

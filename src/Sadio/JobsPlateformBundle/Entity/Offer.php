@@ -193,7 +193,7 @@ class Offer
         $this->user = $user;
 
         // Vu que la relation est bidirectionnelle on lie également l'offre à User
-        // => il faut utiliser $offer->setUser($user)
+        // => il faut utiliser $user->addOffer($this)
         $user->addOffer($this);
         
         return $this;

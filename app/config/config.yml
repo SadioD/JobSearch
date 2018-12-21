@@ -113,6 +113,7 @@ swiftmailer:
     password: '%mailer_password%'
     spool: { type: memory }
 
+# Permet d'éviter un message de deprecation lié aux annotations je crois
 sensio_framework_extra:
    router:
         annotations: false
