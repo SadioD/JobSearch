@@ -22,22 +22,22 @@ $(document).ready(function(){
         $(".main-menu").addClass('mobile-menu');
     });
      
-    $('select').niceSelect();
+    /*$('select').niceSelect();
     $('.img-pop-up').magnificPopup({
         type: 'image',
         gallery:{
         enabled:true
         }
-    });
+    });*/
 
-    $('.active-project-carousel').owlCarousel({
+    /*$('.active-project-carousel').owlCarousel({
         center: true,
         items:1,
         loop:true,
         margin: 100,
         nav: true,
         navText: ['<i class="fa fa-caret-left""></i>', '<i class="fa fa-caret-right""></i>']
-    });
+    });*/
     // $('.active-banner-slider').owlCarousel({
     //     items:1,
     //     loop:true,
@@ -46,9 +46,9 @@ $(document).ready(function(){
     // });
     // Add smooth scrolling to Menu links
 
-    $(document).ready(function() {
+    /*$(document).ready(function() {
         $('#mc_embed_signup').find('form').ajaxChimp();
-    });      
+    });*/      
     // -------   Mail Send ajax
 
      $(document).ready(function() {
@@ -56,26 +56,26 @@ $(document).ready(function(){
 
        // Video lightbox
 
-        $('.play-btn').magnificPopup({
+        /*$('.play-btn').magnificPopup({
             disableOn: 700,
             type: 'iframe',
             mainClass: 'mfp-fade',
             removalDelay: 160,
             preloader: false,
             fixedContentPos: false
-        });
+        });*/
 
 
       //  testimonail carusel
 
-        $('.active-bottle-carousel').owlCarousel({
+        /*$('.active-bottle-carousel').owlCarousel({
             items:1,
             loop:true,
             nav: false,
             autoplay: true,
             autoplayTimeout:3000,
             autoplayHoverPause:true
-        });
+        });*/
 
         var form = $('#myForm'); // contact form
         var submit = $('.submit-btn'); // submit button

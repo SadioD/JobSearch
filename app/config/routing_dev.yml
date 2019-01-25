@@ -13,6 +13,7 @@ _errors:
 _main:
     resource: routing.yml
 
+# Permet d'utiliser la console depuis le navigateur
 coresphere_console:
     resource: .
     type: extra

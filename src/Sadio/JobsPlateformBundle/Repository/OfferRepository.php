@@ -45,7 +45,7 @@ class OfferRepository extends \Doctrine\ORM\EntityRepository
         // bloc try/catch. Cependant, Vu que le Max result est 1, s'il existe plusieurs catégories dans la jointure
         // Seul le premier résultat sera sélectionné.
     }
-    // Permet de récupérer une Offre avec ses catégories => quand on fait offer.getCategories dans TWIG, 
+    // Permet de récupérer les Offres avec les Users correspondant => quand on fait offer.getUser dans TWIG, 
     // Pas de requetes SQL supplémentaire déclenchée
     public function findAllWithUser($page, $offersPerPage) 
     {

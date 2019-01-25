@@ -41,7 +41,7 @@ class Purge
                 // pour chaque User, calcule la date de référence pour la comparer à celle d'aujourd'hui
                 $todaysDate    = new \DateTime();
                 $referenceDate = new \DateTime($user->getCreationDate()->format('Y-m-d H:i:s'));
-                $referenceDate->modify('+1 day');
+                $referenceDate->modify('+10 day');
             
                 // Ensuite supprime les Users qui n'ont publié aucune offre et dont le compte a plus  de 10 jours 
                 // Mais avant on leur envoie un email d'information
